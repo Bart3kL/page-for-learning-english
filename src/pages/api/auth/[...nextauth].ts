@@ -11,15 +11,21 @@ export default NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
     GitHubProvider({
+      //@ts-ignore
       clientId: process.env.GITHUB_ID,
+      //@ts-ignore
       clientSecret: process.env.GITHUB_SECRET,
     }),
     FacebookProvider({
+      //@ts-ignore
       clientId: process.env.FACEBOOK_ID,
+      //@ts-ignore
       clientSecret: process.env.FACEBOOK_SECRET,
     }),
     GoogleProvider({
+      //@ts-ignore
       clientId: process.env.GOOGLE_ID,
+      //@ts-ignore
       clientSecret: process.env.GOOGLE_SECRET,
     }),
   ],
