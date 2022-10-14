@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import { useSession, signIn } from 'next-auth/react';
 
 const Home: NextPage = () => {
-  const handleGoogleLogin = async (e) => {
+  const handleGoogleLogin = async (e:any) => {
     e.preventDefault();
     await signIn('google');
   };
