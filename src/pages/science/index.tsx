@@ -1,9 +1,15 @@
-import React from 'react'
-import { HomePageWrapper } from '../../styles/HomePage.css'
-const SciencePage = () => {
-  return (
-    <div>SciencePage</div>
-  )
-}
+import React from 'react';
+import { useSession } from 'next-auth/react';
 
-export default SciencePage
+import ScienceLayout from '../../components/layout/ScienceLayout';
+import NoAccess from '../../components/Errors/NoAccess';
+const SciencePage = () => {
+  const { data: session } = useSession();
+
+  if (!session) {
+    return <NoAccess></NoAccess>;
+  }
+  return <ScienceLayout>asdas</ScienceLayout>;
+};
+
+export default SciencePage;

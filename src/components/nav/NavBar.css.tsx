@@ -1,11 +1,17 @@
 import styled from 'styled-components';
 
-export const NavWrapper = styled.nav`
+export const MainPageWrapper = styled.nav`
   position: relative;
   display: flex;
   height: 15vh;
   align-items: center;
   z-index: 1;
+`;
+export const OtherPagesWrapper = styled.nav`
+  display: flex;
+  height: 10vh;
+  background-color: #1F2233;
+  align-items: center;
 `;
 export const Logo = styled.li`
   display: flex;

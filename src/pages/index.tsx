@@ -1,17 +1,18 @@
 import type { NextPage } from 'next';
 import { useSession, signIn, signOut } from 'next-auth/react';
-import { FcGoogle } from 'react-icons/fc';
-import { RiFacebookFill } from 'react-icons/ri';
-import { GoMarkGithub } from 'react-icons/go';
 
+import AnimatedText from '../components/animations/AnimatedText';
+import { icons } from '../lib/Icons';
 import {
   HomePageWrapper,
   LoginButtonsWrapper,
-  HeaderInfo,
   LoginBtn,
 } from '../styles/HomePage.css';
 
 const Home: NextPage = () => {
+
+  const {FcGoogle,RiFacebookFill,GoMarkGithub}=icons
+
   const handleLogin = async () => {
     await signIn();
   };
@@ -25,7 +26,7 @@ const Home: NextPage = () => {
     <HomePageWrapper>
       {/* <button onClick={handleGoogleLogout}>logout</button> */}
       <LoginButtonsWrapper>
-        <HeaderInfo>Aby się zalogować wybierz jedną z opcji</HeaderInfo>
+        <AnimatedText />
         <LoginBtn onClick={() => handleLogin()}>
           <div>
             <FcGoogle />

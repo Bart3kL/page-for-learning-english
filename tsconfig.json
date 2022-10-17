@@ -17,6 +17,6 @@
     "sourceMap": true,
     "outDir": "dist",
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/api/auth/[...nextauth].ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/api/auth/[...nextauth].ts", "src/pages/midleware.ts"],
   "exclude": ["node_modules"]
 }

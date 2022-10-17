@@ -5,7 +5,7 @@ export const HomePageWrapper = styled.div`
   height: 100vh;
   align-items: center;
   margin-top: -15vh;
-  background-image: url('background.jpg');
+  background-image: url('../background.jpg');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -38,14 +38,7 @@ export const LoginButtonsWrapper = styled.div`
     background-color: #081F1F;
   }
 `;
-export const HeaderInfo = styled.h2`
-  color: white;
-  font-size: 3rem;
-  width: 100%;
-  min-width: 361px;
-  border-left: 8px solid #27ae60;
-  padding-left: 20px;
-`;
+
 export const LoginBtn = styled.button`
   display: flex;
   justify-content: center;
