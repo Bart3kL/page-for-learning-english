@@ -2,35 +2,28 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
-}
-
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
@@ -43,6 +36,14 @@ model User {
   sessions      Session[]
 }
 
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
 model VerificationToken {
   identifier String
   token      String   @unique
@@ -50,3 +51,72 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model Lessons {
+  id         String                @id @default(uuid())
+  image      String
+  level      String
+  title      String
+  vocabulary VocabularyForLesson[]
+  grammar GrammarForLesson[]
+  exercise ExerciseForLesson[]
+}
+
+model VocabularyForLesson {
+  id String @id @default(uuid())
+  lessonsId String?
+  vocabulary Vocabulary[]
+  Lessons   Lessons? @relation(fields: [lessonsId], references: [id])
+}
+model Vocabulary {
+  id          String  @id @default(uuid())
+  name        String
+  translation String
+  audio       String?
+  image       String?
+  VocabularyForLesson   VocabularyForLesson? @relation(fields: [vocabularyForLessonId], references: [id])
+  vocabularyForLessonId String?
+}
+model GrammarForLesson {
+  id String @id @default(uuid())
+  lessonsId String?
+  grammar Grammar[]
+  Lessons   Lessons? @relation(fields: [lessonsId], references: [id])
+}
+model Grammar{
+  id          String  @id @default(uuid())
+  title String
+  image String
+  grammarForLesson   GrammarForLesson? @relation(fields: [grammarForLessonId], references: [id])
+  grammarForLessonId String?
+}
+model ExerciseForLesson {
+  id String @id @default(uuid())
+  lessonsId String?
+  exercise Exercise[]
+  Lessons   Lessons? @relation(fields: [lessonsId], references: [id])
+}
+model Exercise{
+  id            String   @id @default(uuid())
+  question      String
+  option1       String
+  option2       String
+  option3       String
+  correctAnswer String
+  exerciseForLesson   ExerciseForLesson? @relation(fields: [exerciseForLessonId], references: [id])
+  exerciseForLessonId String?
+}
+
+
+// model Exercise {
+  // id            String   @id @default(uuid())
+  // title         String
+  // question      String
+  // option1       String
+  // option2       String
+  // option3       String
+  // correctAnswer String
+
+//   Lessons       Lessons? @relation(fields: [lessonsId], references: [id])
+//   lessonsId     String?
+// }

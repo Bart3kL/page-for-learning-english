@@ -16,9 +16,9 @@ export const NavList = styled.ul`
 
   div:hover {
     background-color: white;
-    cursor: pointer;
     border-right: 3px solid #27293d;
     color: #27293d;
+    cursor: pointer;
     p {
       border-color: #27293d;
     }
@@ -26,8 +26,8 @@ export const NavList = styled.ul`
 `;
 export const ListItemWrapper = styled.div`
   display: flex;
-  flex-basis: 100%;
   height: 70px;
+  flex-basis: 100%;
   justify-content: center;
   align-items: center;
   font-weight: 500;

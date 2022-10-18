@@ -1,6 +1,7 @@
 import React from 'react';
 import { ReactNode, FC } from 'react';
-import ScienceNav from '../nav/ScienceNav';
+
+import ScienceNav from '../navs/ScienceNav';
 import { SciencePageWrapper, PageContent } from './ScienceLayout.css';
 type Props = { children: ReactNode };
 

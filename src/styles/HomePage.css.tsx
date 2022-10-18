@@ -21,7 +21,7 @@ export const LoginButtonsWrapper = styled.div`
   }
 
   button:nth-child(2):hover {
-    background-color: #CCCCCC;
+    background-color: #cccccc;
   }
   button:nth-child(3) {
     background-color: #3c5999;
@@ -35,7 +35,7 @@ export const LoginButtonsWrapper = styled.div`
     color: white;
   }
   button:nth-child(4):hover {
-    background-color: #081F1F;
+    background-color: #081f1f;
   }
 `;
 

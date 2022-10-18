@@ -1,6 +1,6 @@
 import React from 'react';
 import { ReactNode, FC } from 'react';
-import Navbar from '../nav/NavBar';
+import Navbar from '../navs/NavBar';
 import { GlobalStyles } from '../../styles/GlobalStyles.css';
 import { GlobalWrapper } from './Layout.css';
 
