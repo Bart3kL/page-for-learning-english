@@ -7,9 +7,9 @@ import NoAccess from '../../components/Errors/NoAccess';
 const SciencePage = () => {
   const { data: session } = useSession();
 
-  if (!session) {
-    return <NoAccess></NoAccess>;
-  }
+//   if (!session) {
+//     return <NoAccess></NoAccess>;
+//   }
   return <ScienceLayout>asdas</ScienceLayout>;
 };
 
