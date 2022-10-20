@@ -29,5 +29,14 @@ export default NextAuth({
       clientSecret: process.env.GOOGLE_SECRET,
     }),
   ],
+  // callbacks: {
+  //   async jwt({ token, account }) {
+  //     console.log(token, account);
+  //     if (account) {
+  //       token.accessToken = account.access_token;
+  //     }
+  //     return token;
+  //   },
+  // },
   secret: process.env.NEXT_PUBLIC_SECRET,
 });

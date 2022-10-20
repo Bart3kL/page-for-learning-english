@@ -8,6 +8,7 @@ import { CgPassword } from 'react-icons/cg';
 import { FcGoogle } from 'react-icons/fc';
 import { RiFacebookFill } from 'react-icons/ri';
 import { GoMarkGithub } from 'react-icons/go';
+import {MdOutlineKeyboardArrowDown} from 'react-icons/md'
 export const icons = {
   GiWhiteBook,
   FiRepeat,
@@ -21,4 +22,5 @@ export const icons = {
   FcGoogle,
   RiFacebookFill,
   GoMarkGithub,
+  MdOutlineKeyboardArrowDown
 };
