@@ -6,16 +6,16 @@ export default async function getLessonById(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { id }:any = req.query;
-  const lesson = await prisma.lessons.findUnique({ where: { id } });
-  // const vocabulary = await prisma.vocabulary.findMany();
-  // const grammarr = await prisma.grammar.findMany();
-  // const exercise = await prisma.exercise.findMany();
-  // const words = vocabulary.filter((w) => w.vocabularyForLessonId === lesson?.id);
-  // const grammar = grammarr.filter((g) => g.grammarForLessonId === lesson?.id);
-  // const exercises = exercise.filter((e) => e.exerciseForLessonId === lesson?.id);
+  if (req.method === 'GET') {
+    try {
+      const { id }: any = req.query;
+      const lesson = await prisma.lessons.findUnique({ where: { id } });
+      return lesson ? res.send(lesson) : res.status(400).end();
+    } catch (e) {
+      console.error(e);
+      return res.status(500).send({ success: false });
+    }
+  }
 
-
-
-  return lesson ? res.send(lesson) : res.status(400).end();
+  return;
 }

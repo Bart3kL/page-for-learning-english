@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { useSession, signIn } from 'next-auth/react';
 
 import AnimatedText from '../components/animations/AnimatedText';
 import { icons } from '../lib/Icons';
@@ -16,15 +16,11 @@ const Home: NextPage = () => {
   const handleLogin = async () => {
     await signIn();
   };
-  const handleGoogleLogout = async (e: any) => {
-    await signOut();
-  };
-  const session = useSession();
-  console.log(session);
+
+ 
 
   return (
     <HomePageWrapper>
-      {/* <button onClick={handleGoogleLogout}>logout</button> */}
       <LoginButtonsWrapper>
         <AnimatedText />
         <LoginBtn onClick={() => handleLogin()}>

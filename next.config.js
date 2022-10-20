@@ -10,6 +10,7 @@ const nextConfig = {
       'i.ytimg.com',
       'lingtip.pl',
       'static.wixstatic.com',
+      'lh3.googleusercontent.com',
     ],
   },
 };

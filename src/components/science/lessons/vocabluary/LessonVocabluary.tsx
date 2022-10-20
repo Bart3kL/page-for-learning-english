@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState } from 'react';
 import { GiSpeaker } from 'react-icons/gi';
 
 import {
@@ -9,7 +9,7 @@ import {
   SoundWrapper,
 } from './LessonVocabluary.css';
 
-const LessonVocabluary = ({ vocabluary }:any) => {
+const LessonVocabluary = ({ vocabluary }: any) => {
   const [wordIndex, setWordIndex] = useState(0);
 
   const handleSound = () => {
@@ -17,6 +17,23 @@ const LessonVocabluary = ({ vocabluary }:any) => {
     audio.play();
   };
 
+  // const fetchWord = (word: any) => {
+  //   fetch('/api/user-progress', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(word),
+  //   });
+  // };
+
+  const handleToStudy = () => {
+    setWordIndex(wordIndex + 1);
+    // fetchWord({
+    //   word: vocabluary[wordIndex].name,
+    //   translation: vocabluary[wordIndex].translation,
+    // });
+  };
   return (
     <VocabluaryWrapper>
       <CardWrapper>
@@ -28,7 +45,7 @@ const LessonVocabluary = ({ vocabluary }:any) => {
           <GiSpeaker onClick={handleSound} />
         </SoundWrapper>
         <ButtonWrapper>
-          <button onClick={() => setWordIndex(wordIndex + 1)}>Do nauki</button>
+          <button onClick={handleToStudy}>Do nauki</button>
           <button onClick={() => setWordIndex(wordIndex + 1)}>Znam to</button>
         </ButtonWrapper>
         <p>{`${wordIndex}/${vocabluary.length}`}</p>

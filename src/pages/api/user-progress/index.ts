@@ -18,10 +18,11 @@ export default async function getAllLessons(
   if (req.method === 'POST') {
     try {
       const { body: data } = req;
-      const newLesson = await prisma.lessons.create({
-        data,
-      });
-      return res.status(201).send(newLesson);
+      // const newLesson = await prisma.lessons.create({
+      //   data,
+      // });
+      console.log(data)
+      // return res.status(201).send(newLesson);
     } catch (e) {
       console.error(e);
       return res.status(500).send({ success: false });
