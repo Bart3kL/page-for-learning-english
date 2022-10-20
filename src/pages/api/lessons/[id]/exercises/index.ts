@@ -7,7 +7,7 @@ export default async function getLessonById(
   res: NextApiResponse
 ) {
 
-  const { id } = req.query;
+  const { id }:any = req.query;
   const lesson = await prisma.lessons.findUnique({ where: { id } });
 
   const exercises = await prisma.exercise.findMany();

@@ -22,7 +22,9 @@ import {
 } from '../../../../styles/Lesson.css';
 
 const fetchLesson = (id: string) =>
-   axios.get(`http://localhost:3000/api/lessons/${id}`).then(({ data }) => data);
+  axios
+    .get(`http://localhost:3000/api/lessons/${id}`)
+    .then(({ data }: any) => data);
 
 const Lesson = ({ id }: any) => {
   const queryClient = useQueryClient();

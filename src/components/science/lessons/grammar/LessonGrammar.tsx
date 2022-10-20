@@ -4,7 +4,7 @@ import { GiSpeaker } from 'react-icons/gi';
 
 import { GrammarWrapper, HeadTitle, ImageWrapper } from './LessonGrammar.css';
 
-const LessonGrammar = ({ grammar }) => {
+const LessonGrammar = ({ grammar }:any) => {
   return (
     <GrammarWrapper>
       <HeadTitle>{grammar[0].title}</HeadTitle>

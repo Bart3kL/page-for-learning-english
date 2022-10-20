@@ -9,7 +9,7 @@ import {
   SoundWrapper,
 } from './LessonVocabluary.css';
 
-const LessonVocabluary = ({ vocabluary }) => {
+const LessonVocabluary = ({ vocabluary }:any) => {
   const [wordIndex, setWordIndex] = useState(0);
 
   const handleSound = () => {

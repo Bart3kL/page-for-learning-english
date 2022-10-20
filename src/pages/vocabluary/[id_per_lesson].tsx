@@ -16,7 +16,7 @@ import { HeadLine } from '../../styles/Vocabluary.css';
 const fetchLesson = (id: string) =>
   axios
     .get(`http://localhost:3000/api/lessons/${id}/vocabluary`)
-    .then(({ data }) => data);
+    .then(({ data }:any) => data);
 
 const Vocabluary = ({ id }: any) => {
   const queryClient = useQueryClient();

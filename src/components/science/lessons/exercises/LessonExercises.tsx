@@ -10,7 +10,7 @@ import {
   ButtonToNextLesson,
 } from './LessonExercises.css';
 
-const LessonExercises = ({ exercises }) => {
+const LessonExercises = ({ exercises }:any) => {
   const [manageExercise, setManageExercise] = useState({
     index: 0,
     answer: '',

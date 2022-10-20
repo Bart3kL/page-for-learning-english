@@ -16,7 +16,7 @@ import { HeadLine } from '../../styles/Vocabluary.css';
 const fetchLesson = (id: string) =>
   axios
     .get(`http://localhost:3000/api/lessons/${id}/grammar`)
-    .then(({ data }) => data);
+    .then(({ data }: any) => data);
 
 const Vocabluary = ({ id }: any) => {
   const queryClient = useQueryClient();
@@ -32,13 +32,14 @@ const Vocabluary = ({ id }: any) => {
           queryClient.setQueryData([`id_per_lesson-${id}-grammar`], data);
         }
         data.forEach((el: any) => {
-          if (!queryClient.getQueryData<any[]>([`id_per_lesson-${id}-grammar`])) {
+          if (
+            !queryClient.getQueryData<any[]>([`id_per_lesson-${id}-grammar`])
+          ) {
             queryClient.setQueryData([`id_per_lesson-${id}-grammar`], el);
           }
         });
       },
       onError: (err: AxiosError) => {
-      
         if (err.response?.status === 403) {
           toast({
             title: 'Too many requests for your IP, serving data from cache.',
@@ -63,7 +64,9 @@ const Vocabluary = ({ id }: any) => {
         });
       },
       initialData: () => {
-        const cachedData = queryClient.getQueryData([`id_per_lesson-${id}-grammar`]);
+        const cachedData = queryClient.getQueryData([
+          `id_per_lesson-${id}-grammar`,
+        ]);
         if (!cachedData) return;
 
         queryClient.cancelQueries([`id_per_lesson-${id}-grammar`]);
@@ -94,7 +97,9 @@ export const getServerSideProps = async (context: {
   const queryClient = new QueryClient();
   queryClient.cancelQueries([`id_per_lesson-${id}-grammar`]);
 
-  await queryClient.prefetchQuery([`id_per_lesson-${id}-grammar`, id], () => fetchLesson(id));
+  await queryClient.prefetchQuery([`id_per_lesson-${id}-grammar`, id], () =>
+    fetchLesson(id)
+  );
 
   return {
     props: {

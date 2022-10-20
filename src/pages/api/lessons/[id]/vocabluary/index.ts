@@ -10,7 +10,7 @@ export default async function getLessonById(
   // https://next-auth.js.org/getting-started/example#backend---api-route
   // GET POST PATCH PUT
 
-  const { id } = req.query;
+  const { id }:any = req.query;
   const lesson = await prisma.lessons.findUnique({ where: { id } });
 
   const vocabulary = await prisma.vocabulary.findMany();

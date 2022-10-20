@@ -6,7 +6,7 @@ export default async function getLessonById(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { id } = req.query;
+  const { id }:any = req.query;
   const lesson = await prisma.lessons.findUnique({ where: { id } });
   // const vocabulary = await prisma.vocabulary.findMany();
   // const grammarr = await prisma.grammar.findMany();
