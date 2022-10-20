@@ -76,7 +76,7 @@ export default function Navbar() {
             <ProfileWrapper>
               <ImageWrapper>
                 <Image
-                  src={session.data?.user?.image}
+                  src={`${session.data?.user?.image}`}
                   alt="Picture of the author"
                   width={70}
                   height={70}
