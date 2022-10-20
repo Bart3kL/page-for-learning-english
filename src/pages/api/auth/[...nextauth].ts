@@ -28,5 +28,7 @@ export default NextAuth({
       //@ts-ignore
       clientSecret: process.env.GOOGLE_SECRET,
     }),
+    
   ],
+  secret: process.env.NEXTAUTH_SECRET,
 });

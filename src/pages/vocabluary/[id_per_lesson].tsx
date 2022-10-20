@@ -15,7 +15,7 @@ import { HeadLine } from '../../styles/Vocabluary.css';
 
 const fetchLesson = (id: string) =>
   axios
-    .get(`http://localhost:3000/api/lessons/${id}/vocabluary`)
+    .get(`https://page-for-learning-english.vercel.app/api/lessons/${id}/vocabluary`)
     .then(({ data }:any) => data);
 
 const Vocabluary = ({ id }: any) => {

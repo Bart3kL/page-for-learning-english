@@ -23,7 +23,7 @@ import {
 
 const fetchLesson = (id: string) =>
   axios
-    .get(`http://localhost:3000/api/lessons/${id}`)
+    .get(`https://page-for-learning-english.vercel.app/api/lessons/${id}`)
     .then(({ data }: any) => data);
 
 const Lesson = ({ id }: any) => {
