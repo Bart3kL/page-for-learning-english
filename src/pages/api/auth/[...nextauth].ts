@@ -28,7 +28,6 @@ export default NextAuth({
       //@ts-ignore
       clientSecret: process.env.GOOGLE_SECRET,
     }),
-    
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXT_PUBLIC_SECRET,
 });
