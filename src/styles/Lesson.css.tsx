@@ -73,10 +73,12 @@ export const CategoriesWrapper = styled.section`
 `;
 export const ImageWrapper = styled.section`
   display: flex;
+
+  box-sizing: border-box;
   width: 50%;
   justify-content: center;
   align-items: flex-start;
-
+  min-width: 550px;
   span {
     border-radius: 50%;
   }
