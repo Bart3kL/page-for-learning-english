@@ -9,7 +9,7 @@ import { HeadLine, LessonsWrapper } from '../../../styles/LessonPage.css';
 import LessonView from '../../../components/science/lessons/LessonView';
 
 async function fetchLessons() {
-  const { data } = await axios.get('https://page-for-learning-english.vercel.app/lessons');
+  const { data } = await axios.get('https://page-for-learning-english.vercel.app/api/lessons');
   return data;
 }
 const LessonPage = () => {
