@@ -24,7 +24,7 @@ const Home: NextPage = () => {
 
   return (
     <HomePageWrapper>
-      {/* <button onClick={handleGoogleLogout}>logout</button> */}
+      <button onClick={handleGoogleLogout}>logout</button>
       <LoginButtonsWrapper>
         <AnimatedText />
         <LoginBtn onClick={() => handleLogin()}>
