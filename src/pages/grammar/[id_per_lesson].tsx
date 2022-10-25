@@ -6,19 +6,21 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
+import BarLoader from 'react-spinners/BarLoader';
 
 import { useToast } from '@chakra-ui/react';
 import { AxiosError } from 'axios';
 import ScienceLayout from '../../components/layouts/ScienceLayout';
 import LessonGrammar from '../../components/science/lessons/grammar/LessonGrammar';
 import { HeadLine } from '../../styles/Vocabluary.css';
+import { override } from '../../lib/spinner';
 
 const fetchLesson = (id: string) =>
   axios
     .get(`http://localhost:3000/api/lessons/${id}/grammar`)
     .then(({ data }: any) => data);
 
-const Vocabluary = ({ id }: any) => {
+const Vocabluary = ({ id }: { id: string }) => {
   const queryClient = useQueryClient();
   const toast = useToast();
 
@@ -32,9 +34,7 @@ const Vocabluary = ({ id }: any) => {
           queryClient.setQueryData([`id_per_lesson-${id}-grammar`], data);
         }
         data.forEach((el: any) => {
-          if (
-            !queryClient.getQueryData<any[]>([`id_per_lesson-${id}-grammar`])
-          ) {
+          if (!queryClient.getQueryData([`id_per_lesson-${id}-grammar`])) {
             queryClient.setQueryData([`id_per_lesson-${id}-grammar`], el);
           }
         });
@@ -75,15 +75,24 @@ const Vocabluary = ({ id }: any) => {
       },
     }
   );
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
   return (
     <ScienceLayout>
-      <HeadLine>
-        Lekcja 2 - <span>Gramatyka</span>
-      </HeadLine>
-      <LessonGrammar grammar={grammar} />
+      {isLoading ? (
+        <BarLoader
+          color={'#1f2233'}
+          loading={isLoading}
+          cssOverride={override}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      ) : (
+        <>
+          <HeadLine>
+            Lekcja 2 - <span>Gramatyka</span>
+          </HeadLine>
+          <LessonGrammar grammar={grammar} />
+        </>
+      )}
     </ScienceLayout>
   );
 };

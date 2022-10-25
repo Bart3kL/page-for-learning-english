@@ -6,19 +6,21 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
+import BarLoader from 'react-spinners/BarLoader';
 
 import { useToast } from '@chakra-ui/react';
 import { AxiosError } from 'axios';
 import ScienceLayout from '../../components/layouts/ScienceLayout';
 import LessonExercises from '../../components/science/lessons/exercises/LessonExercises';
 import { HeadLine } from '../../styles/Vocabluary.css';
+import { override } from '../../lib/spinner';
 
 const fetchLesson = (id: string) =>
   axios
     .get(`http://localhost:3000/api/lessons/${id}/exercises`)
     .then(({ data }) => data);
 
-const Exercises = ({ id }: any) => {
+const Exercises = ({ id }: { id: string }) => {
   const queryClient = useQueryClient();
   const toast = useToast();
 
@@ -32,7 +34,7 @@ const Exercises = ({ id }: any) => {
           queryClient.setQueryData([`id_per_lesson-${id}-exercises`], data);
         }
         data.forEach((el: any) => {
-          if (!queryClient.getQueryData<any[]>([`id_per_lesson-${id}-exercises`])) {
+          if (!queryClient.getQueryData([`id_per_lesson-${id}-exercises`])) {
             queryClient.setQueryData([`id_per_lesson-${id}-exercises`], el);
           }
         });
@@ -62,7 +64,9 @@ const Exercises = ({ id }: any) => {
         });
       },
       initialData: () => {
-        const cachedData = queryClient.getQueryData([`id_per_lesson-${id}-exercises`]);
+        const cachedData = queryClient.getQueryData([
+          `id_per_lesson-${id}-exercises`,
+        ]);
         if (!cachedData) return;
 
         queryClient.cancelQueries([`id_per_lesson-${id}-exercises`]);
@@ -71,16 +75,25 @@ const Exercises = ({ id }: any) => {
       },
     }
   );
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-  console.log(exercises)
+
   return (
     <ScienceLayout>
-      <HeadLine>
-        Lekcja 3 - <span>Ćwiczenia</span>
-      </HeadLine>
-      <LessonExercises exercises={exercises}/>
+      {isLoading ? (
+        <BarLoader
+          color={'#1f2233'}
+          loading={isLoading}
+          cssOverride={override}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      ) : (
+        <>
+          <HeadLine>
+            Lekcja 3 - <span>Ćwiczenia</span>
+          </HeadLine>
+          <LessonExercises exercises={exercises} />
+        </>
+      )}
     </ScienceLayout>
   );
 };
@@ -94,7 +107,9 @@ export const getServerSideProps = async (context: {
   const queryClient = new QueryClient();
   queryClient.cancelQueries([`id_per_lesson-${id}-exercises`]);
 
-  await queryClient.prefetchQuery([`id_per_lesson-${id}-exercises`, id], () => fetchLesson(id));
+  await queryClient.prefetchQuery([`id_per_lesson-${id}-exercises`, id], () =>
+    fetchLesson(id)
+  );
 
   return {
     props: {

@@ -11,6 +11,8 @@ import Image from 'next/image';
 import axios from 'axios';
 import { useToast } from '@chakra-ui/react';
 import { AxiosError } from 'axios';
+import BarLoader from 'react-spinners/BarLoader';
+import { getCsrfToken } from 'next-auth/react';
 
 import { HeadLine } from '../../../../styles/LessonPage.css';
 import ScienceLayout from '../../../../components/layouts/ScienceLayout';
@@ -19,17 +21,33 @@ import {
   LessonsWrapper,
   CategoriesWrapper,
   ImageWrapper,
+  LessonCategoryDisabled
 } from '../../../../styles/Lesson.css';
+import { override } from '../../../../lib/spinner';
+
+async function getToken() {
+  const csrfToken = getCsrfToken();
+  return csrfToken;
+}
+
+const fetchUserProgress = async () => {
+  const token = await getToken();
+  const data = await axios
+    .get(`http://localhost:3000/api/user-progress/${token}`)
+    .then(({ data }: any) => data);
+  return data;
+};
 
 const fetchLesson = (id: string) =>
   axios
     .get(`http://localhost:3000/api/lessons/${id}`)
     .then(({ data }: any) => data);
 
-const Lesson = ({ id }: any) => {
+const Lesson = ({ id }: { id: string }) => {
   const queryClient = useQueryClient();
   const toast = useToast();
 
+  const { data: userProgress,isLoading:loading } = useQuery(['userProgress'], fetchUserProgress);
   const { data: lesson, isLoading } = useQuery(
     [`lesson-${id}`],
     () => fetchLesson(id),
@@ -74,45 +92,74 @@ const Lesson = ({ id }: any) => {
       },
     }
   );
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
+
+if(loading){
+return <p>Loading</p>
+}
   return (
     <ScienceLayout>
-      <HeadLine>{lesson.title}</HeadLine>
-      <LessonsWrapper>
-        <CategoriesWrapper>
-          <Link href={`/vocabluary/${id}`}>
-            <LessonCategory>
-              <p>Lekcja 1</p>
-              <p>Słownictwo</p>
-              <IoIosArrowDown />
-            </LessonCategory>
-          </Link>
-          <Link href={`/grammar/${id}`}>
-            <LessonCategory>
-              <p>Lekcja 2</p>
-              <p>Gramatyka</p>
-              <IoIosArrowDown />
-            </LessonCategory>
-          </Link>
-          <Link href={`/exercises/${id}`}>
-            <LessonCategory>
-              <p>Lekcja 3</p>
-              <p>Ćwiczenia</p>
-              <IoIosArrowDown />
-            </LessonCategory>
-          </Link>
-        </CategoriesWrapper>
-        <ImageWrapper>
-          <Image
-            src={lesson.image}
-            alt="Picture of the author"
-            width={500}
-            height={500}
-          />
-        </ImageWrapper>
-      </LessonsWrapper>
+      {isLoading? (
+        <BarLoader
+          color={'#1f2233'}
+          loading={isLoading}
+          cssOverride={override}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      ) : (
+        <>
+          <HeadLine>{lesson.title}</HeadLine>
+          <LessonsWrapper>
+            <CategoriesWrapper>
+              <Link href={`/vocabluary/${id}`}>
+                <LessonCategory>
+                  <p>Lekcja 1</p>
+                  <p>Słownictwo</p>
+                  <IoIosArrowDown />
+                </LessonCategory>
+              </Link>
+              {userProgress.lessonStep >= '2' && userProgress.lesson === id ? (
+                <Link href={`/grammar/${id}`}>
+                  <LessonCategory>
+                    <p>Lekcja 2</p>
+                    <p>Gramatyka</p>
+                    <IoIosArrowDown />
+                  </LessonCategory>
+                </Link>
+              ) : (
+                <LessonCategoryDisabled>
+                  <p>Lekcja 2</p>
+                  <p>Gramatyka</p>
+                  <IoIosArrowDown />
+                </LessonCategoryDisabled>
+              )}
+              {userProgress.lessonStep === '3' && userProgress.lesson === id? ( //zle tutaj jest
+                <Link href={`/exercises/${id}`}>
+                  <LessonCategory>
+                    <p>Lekcja 3</p>
+                    <p>Ćwiczenia</p>
+                    <IoIosArrowDown />
+                  </LessonCategory>
+                </Link>
+              ) : (
+                <LessonCategoryDisabled>
+                  <p>Lekcja 3</p>
+                  <p>Ćwiczenia</p>
+                  <IoIosArrowDown />
+                </LessonCategoryDisabled>
+              )}
+            </CategoriesWrapper>
+            <ImageWrapper>
+              <Image
+                src={lesson.image}
+                alt="Picture of the author"
+                width={500}
+                height={500}
+              />
+            </ImageWrapper>
+          </LessonsWrapper>
+        </>
+      )}
     </ScienceLayout>
   );
 };

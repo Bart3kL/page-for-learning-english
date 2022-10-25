@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { useSession, signIn } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 
 import AnimatedText from '../components/animations/AnimatedText';
 import { icons } from '../lib/Icons';
@@ -8,17 +8,17 @@ import {
   LoginButtonsWrapper,
   LoginBtn,
 } from '../styles/HomePage.css';
+import useUserProgress from '../lib/axios/usePostUserProgress';
 
 const Home: NextPage = () => {
+  const fetchLessonStep = useUserProgress();
 
-  const {FcGoogle,RiFacebookFill,GoMarkGithub}=icons
+  const { FcGoogle, RiFacebookFill, GoMarkGithub } = icons;
 
   const handleLogin = async () => {
+    fetchLessonStep('1', '1');
     await signIn();
   };
-
- 
-
   return (
     <HomePageWrapper>
       <LoginButtonsWrapper>

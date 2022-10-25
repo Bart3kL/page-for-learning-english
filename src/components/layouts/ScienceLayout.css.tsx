@@ -7,6 +7,7 @@ export const PageContent = styled.main`
   display: flex;
   flex-direction: column;
   width: 100%;
+  min-height: 80vh;
   height: calc(90vh - 2%);
   padding: 2% 5%;
 `;

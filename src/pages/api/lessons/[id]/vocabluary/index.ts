@@ -23,15 +23,3 @@ export default async function getLessonById(
     }
   }
 }
-
-// struktura progresu lesson
-// current step
-
-// step
-//
-
-// list of steps
-
-// lesson
-// list of steps
-// currentStep

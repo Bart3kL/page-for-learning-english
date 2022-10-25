@@ -1,5 +1,43 @@
 import styled from 'styled-components';
 
+export const SingleLessonWrapperDisabled = styled.div`
+  display: flex;
+  width: 400px;
+  height: 150px;
+  box-shadow: 8px 8px 30px -6px rgba(66, 68, 90, 1);
+  margin: 10px 20px;
+  transition: 0.3s;
+  background-color: #D3D3D3;
+  background-repeat: no-repeat;
+  background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+  :hover {
+    background-image: linear-gradient(to right, #ae2727 100%, #ae2727 100%),
+      linear-gradient(to bottom, #ae2727 100%, #ae2727 100%),
+      linear-gradient(to right, #ae2727 100%, #ae2727 100%),
+      linear-gradient(to bottom, #ae2727 100%, #ae2727 100%);
+    background-size: 100% 3px, 3px 100%, 100% 3px, 3px 100%;
+    animation: bg 1.25s cubic-bezier(0.19, 1, 0.22, 1) 1;
+
+    cursor: not-allowed;
+  }
+  @keyframes bg {
+    0% {
+      background-size: 0 3px, 3px 0, 0 3px, 3px 0;
+    }
+    25% {
+      background-size: 100% 3px, 3px 0, 0 3px, 3px 0;
+    }
+    50% {
+      background-size: 100% 3px, 3px 100%, 0 3px, 3px 0;
+    }
+    75% {
+      background-size: 100% 3px, 3px 100%, 100% 3px, 3px 0;
+    }
+    100% {
+      background-size: 100% 3px, 3px 100%, 100% 3px, 3px 100%;
+    }
+  }
+`;
 export const SingleLessonWrapper = styled.div`
   display: flex;
   width: 400px;

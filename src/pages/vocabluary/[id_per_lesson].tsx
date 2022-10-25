@@ -6,19 +6,21 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
+import BarLoader from 'react-spinners/BarLoader';
 
 import { useToast } from '@chakra-ui/react';
 import { AxiosError } from 'axios';
 import ScienceLayout from '../../components/layouts/ScienceLayout';
 import LessonVocabluary from '../../components/science/lessons/vocabluary/LessonVocabluary';
 import { HeadLine } from '../../styles/Vocabluary.css';
+import { override } from '../../lib/spinner';
 
 const fetchLesson = (id: string) =>
   axios
     .get(`http://localhost:3000/api/lessons/${id}/vocabluary`)
-    .then(({ data }:any) => data);
+    .then(({ data }: any) => data);
 
-const Vocabluary = ({ id }: any) => {
+const Vocabluary = ({ id }: { id: string }) => {
   const queryClient = useQueryClient();
   const toast = useToast();
 
@@ -32,7 +34,9 @@ const Vocabluary = ({ id }: any) => {
           queryClient.setQueryData([`id_per_lesson-${id}-vocabluary`], data);
         }
         data.forEach((el: any) => {
-          if (!queryClient.getQueryData<any[]>([`id_per_lesson-${id}-vocabluary`])) {
+          if (
+            !queryClient.getQueryData([`id_per_lesson-${id}-vocabluary`])
+          ) {
             queryClient.setQueryData([`id_per_lesson-${id}-vocabluary`], el);
           }
         });
@@ -62,7 +66,9 @@ const Vocabluary = ({ id }: any) => {
         });
       },
       initialData: () => {
-        const cachedData = queryClient.getQueryData([`id_per_lesson-${id}-vocabluary`]);
+        const cachedData = queryClient.getQueryData([
+          `id_per_lesson-${id}-vocabluary`,
+        ]);
         if (!cachedData) return;
 
         queryClient.cancelQueries([`id_per_lesson-${id}-vocabluary`]);
@@ -73,13 +79,21 @@ const Vocabluary = ({ id }: any) => {
   );
   return (
     <ScienceLayout>
-      <HeadLine>
-        Lekcja 1 - <span>słownictwo</span>
-      </HeadLine>
       {isLoading ? (
-        <p>Loading...</p>
+        <BarLoader
+          color={'#1f2233'}
+          loading={isLoading}
+          cssOverride={override}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
       ) : (
-        <LessonVocabluary vocabluary={vocabluary} />
+        <>
+          <HeadLine>
+            Lekcja 1 - <span>słownictwo</span>
+          </HeadLine>
+          <LessonVocabluary vocabluary={vocabluary} />
+        </>
       )}
     </ScienceLayout>
   );
@@ -94,7 +108,9 @@ export const getServerSideProps = async (context: {
   const queryClient = new QueryClient();
   queryClient.cancelQueries([`id_per_lesson-${id}-vocabluary`]);
 
-  await queryClient.prefetchQuery([`id_per_lesson-${id}-vocabluary`, id], () => fetchLesson(id));
+  await queryClient.prefetchQuery([`id_per_lesson-${id}-vocabluary`, id], () =>
+    fetchLesson(id)
+  );
 
   return {
     props: {

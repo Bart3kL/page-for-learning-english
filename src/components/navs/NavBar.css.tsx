@@ -63,7 +63,7 @@ export const ImageWrapper = styled.div`
 export const ProfileName = styled.div`
   display: flex;
   margin: 0 30px;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: white;
   cursor: pointer;
 

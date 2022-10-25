@@ -11,6 +11,7 @@ const nextConfig = {
       'lingtip.pl',
       'static.wixstatic.com',
       'lh3.googleusercontent.com',
+      'undefined',
     ],
   },
 };

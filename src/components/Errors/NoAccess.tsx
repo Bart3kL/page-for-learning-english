@@ -6,8 +6,10 @@ const NoAccess = () => {
   return (
     <BackDrop>
       <ScienceNav />
-      <NoAccessWrapper><h2>Zaloguj sie!</h2>
-      <p>Musisz być zalogowany aby korzystać z tej strony</p></NoAccessWrapper>
+      <NoAccessWrapper>
+        <h2>Zaloguj sie!</h2>
+        <p>Musisz być zalogowany aby korzystać z tej strony</p>
+      </NoAccessWrapper>
     </BackDrop>
   );
 };

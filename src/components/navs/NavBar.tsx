@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import updateUser from 'next-auth';
-import { useSession, signOut, getCsrfToken } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import {
   MainPageWrapper,
@@ -15,7 +14,9 @@ import {
   LogoutWrapper,
 } from './NavBar.css';
 import { icons } from '../../lib/Icons';
+
 export default function Navbar() {
+
   const [toggle, setToggle] = useState(false);
   const session = useSession();
   const router = useRouter();
@@ -72,14 +73,14 @@ export default function Navbar() {
               <Link href="/contact">Kontakt</Link>
             </li>
           </NavList>
-          {session.status !== 'unauthenticated' && (
+          {session.status === 'authenticated' && (
             <ProfileWrapper>
               <ImageWrapper>
                 <Image
                   src={`${session.data?.user?.image}`}
                   alt="Picture of the author"
-                  width={70}
-                  height={70}
+                  width={50}
+                  height={50}
                 />
               </ImageWrapper>
               <ProfileName onClick={() => setToggle((prev) => !prev)}>

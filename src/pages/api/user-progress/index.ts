@@ -6,23 +6,31 @@ export default async function getAllLessons(
   res: NextApiResponse
 ) {
   const prisma = new PrismaClient();
+
   if (req.method === 'GET') {
-    try {
-      const newLessons = await prisma.lessons.findMany();
-      return res.send(newLessons);
-    } catch (e) {
-      console.error(e);
-      return res.status(500).send({ success: false });
-    }
+    const usersProgress = await prisma.users.findMany();
+    return res.send(usersProgress);
   }
   if (req.method === 'POST') {
     try {
       const { body: data } = req;
-      // const newLesson = await prisma.lessons.create({
-      //   data,
-      // });
-      console.log(data)
-      // return res.status(201).send(newLesson);
+      const id = data.userId;
+      const usersProgress = await prisma.users.upsert({
+        where: { id: id },
+        update: {
+          id: data.userId,
+          lesson: data.lesson,
+          lessonStep: data.lessonStep,
+          userId: data.userId,
+        },
+        create: {
+          id: data.userId,
+          lesson: data.lesson,
+          lessonStep: data.lessonStep,
+          userId: data.userId,
+        },
+      });
+      return res.status(201).send(usersProgress);
     } catch (e) {
       console.error(e);
       return res.status(500).send({ success: false });

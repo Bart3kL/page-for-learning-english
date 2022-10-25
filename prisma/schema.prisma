@@ -58,52 +58,81 @@ model Lessons {
   level      String
   title      String
   vocabulary VocabularyForLesson[]
-  grammar GrammarForLesson[]
-  exercise ExerciseForLesson[]
+  grammar    GrammarForLesson[]
+  exercise   ExerciseForLesson[]
 }
 
 model VocabularyForLesson {
-  id String @id @default(uuid())
-  lessonsId String?
+  id         String       @id @default(uuid())
+  lessonsId  String?
   vocabulary Vocabulary[]
-  Lessons   Lessons? @relation(fields: [lessonsId], references: [id])
+  Lessons    Lessons?     @relation(fields: [lessonsId], references: [id])
 }
+
 model Vocabulary {
-  id          String  @id @default(uuid())
-  name        String
-  translation String
-  audio       String?
-  image       String?
+  id                    String               @id @default(uuid())
+  name                  String
+  translation           String
+  audio                 String?
+  image                 String?
   VocabularyForLesson   VocabularyForLesson? @relation(fields: [vocabularyForLessonId], references: [id])
   vocabularyForLessonId String?
 }
+
 model GrammarForLesson {
-  id String @id @default(uuid())
+  id        String    @id @default(uuid())
   lessonsId String?
-  grammar Grammar[]
-  Lessons   Lessons? @relation(fields: [lessonsId], references: [id])
+  grammar   Grammar[]
+  Lessons   Lessons?  @relation(fields: [lessonsId], references: [id])
 }
-model Grammar{
-  id          String  @id @default(uuid())
-  title String
-  image String
+
+model Grammar {
+  id                 String            @id @default(uuid())
+  title              String
+  image              String
   grammarForLesson   GrammarForLesson? @relation(fields: [grammarForLessonId], references: [id])
   grammarForLessonId String?
 }
+
 model ExerciseForLesson {
-  id String @id @default(uuid())
+  id        String     @id @default(uuid())
   lessonsId String?
-  exercise Exercise[]
-  Lessons   Lessons? @relation(fields: [lessonsId], references: [id])
+  exercise  Exercise[]
+  Lessons   Lessons?   @relation(fields: [lessonsId], references: [id])
 }
-model Exercise{
-  id            String   @id @default(uuid())
-  question      String
-  option1       String
-  option2       String
-  option3       String
-  correctAnswer String
+
+model Exercise {
+  id                  String             @id @default(uuid())
+  question            String
+  option1             String
+  option2             String
+  option3             String
+  correctAnswer       String
   exerciseForLesson   ExerciseForLesson? @relation(fields: [exerciseForLessonId], references: [id])
   exerciseForLessonId String?
 }
 
+model Users {
+  id         String @id @default(uuid())
+  userId     String
+  // vocabulary VocabluaryForUser[]
+  lesson     String
+  lessonStep String
+}
+
+// model VocabluaryForUser {
+//   id         String           @id @default(uuid())
+//   userId     String?
+//   vocabulary UserVocabluary[]
+//   Users      Users?           @relation(fields: [userId], references: [id])
+// }
+
+// model UserVocabluary {
+//   id                  String             @id @default(uuid())
+//   name                String
+//   translation         String
+//   audio               String?
+//   image               String?
+//   VocabluaryForUser   VocabluaryForUser? @relation(fields: [VocabluaryForUserId], references: [id])
+//   VocabluaryForUserId String?
+// }
