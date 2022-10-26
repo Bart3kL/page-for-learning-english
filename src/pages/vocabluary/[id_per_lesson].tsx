@@ -12,7 +12,7 @@ import { useToast } from '@chakra-ui/react';
 import { AxiosError } from 'axios';
 import ScienceLayout from '../../components/layouts/ScienceLayout';
 import LessonVocabluary from '../../components/science/lessons/vocabluary/LessonVocabluary';
-import { HeadLine } from '../../styles/Vocabluary.css';
+import { HeadLine } from '../../components/PageSpecific/Science/Vocabluary.styled';
 import { override } from '../../lib/spinner';
 
 const fetchLesson = (id: string) =>
@@ -25,19 +25,17 @@ const Vocabluary = ({ id }: { id: string }) => {
   const toast = useToast();
 
   const { data: vocabluary, isLoading } = useQuery(
-    [`id_per_lesson-${id}-vocabluary`],
+    [`id_per_lesson-vocabluary`, `${id}`],
     () => fetchLesson(id),
     {
       onSuccess: (data) => {
         if (!data) return [];
-        if (!queryClient.getQueryData([`id_per_lesson-${id}-vocabluary`])) {
-          queryClient.setQueryData([`id_per_lesson-${id}-vocabluary`], data);
+        if (!queryClient.getQueryData([`id_per_lesson-vocabluary`, id])) {
+          queryClient.setQueryData([`id_per_lesson-vocabluary`, id], data);
         }
         data.forEach((el: any) => {
-          if (
-            !queryClient.getQueryData([`id_per_lesson-${id}-vocabluary`])
-          ) {
-            queryClient.setQueryData([`id_per_lesson-${id}-vocabluary`], el);
+          if (!queryClient.getQueryData([`id_per_lesson-vocabluary`, id])) {
+            queryClient.setQueryData([`id_per_lesson-vocabluary`, id], el);
           }
         });
       },
@@ -67,11 +65,12 @@ const Vocabluary = ({ id }: { id: string }) => {
       },
       initialData: () => {
         const cachedData = queryClient.getQueryData([
-          `id_per_lesson-${id}-vocabluary`,
+          `id_per_lesson-vocabluary`,
+          id,
         ]);
         if (!cachedData) return;
 
-        queryClient.cancelQueries([`id_per_lesson-${id}-vocabluary`]);
+        queryClient.cancelQueries([`id_per_lesson-vocabluary`, id]);
 
         return cachedData;
       },
@@ -106,7 +105,7 @@ export const getServerSideProps = async (context: {
 }) => {
   const id = context.params?.id_per_lesson as string;
   const queryClient = new QueryClient();
-  queryClient.cancelQueries([`id_per_lesson-${id}-vocabluary`]);
+  queryClient.cancelQueries([`id_per_lesson-vocabluary`, id]);
 
   await queryClient.prefetchQuery([`id_per_lesson-${id}-vocabluary`, id], () =>
     fetchLesson(id)

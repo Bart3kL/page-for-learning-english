@@ -12,6 +12,9 @@ const nextConfig = {
       'static.wixstatic.com',
       'lh3.googleusercontent.com',
       'undefined',
+      'www.grammar.cl',
+      'photos.google.com',
+      'i.imgur.com',
     ],
   },
 };

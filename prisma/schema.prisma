@@ -115,24 +115,43 @@ model Exercise {
 model Users {
   id         String @id @default(uuid())
   userId     String
-  // vocabulary VocabluaryForUser[]
   lesson     String
   lessonStep String
 }
 
-// model VocabluaryForUser {
-//   id         String           @id @default(uuid())
-//   userId     String?
-//   vocabulary UserVocabluary[]
-//   Users      Users?           @relation(fields: [userId], references: [id])
-// }
+model DictonaryLevel {
+  id         String                @id @default(uuid())
+  image      String
+  level      String
+  categories CategoriesForDictionaryLevel[]
+}
 
-// model UserVocabluary {
-//   id                  String             @id @default(uuid())
-//   name                String
-//   translation         String
-//   audio               String?
-//   image               String?
-//   VocabluaryForUser   VocabluaryForUser? @relation(fields: [VocabluaryForUserId], references: [id])
-//   VocabluaryForUserId String?
-// }
+model CategoriesForDictionaryLevel {
+  id         String       @id @default(uuid())
+  levelId  String?
+  name String
+  image String
+  subcategory Subcategory[]
+  DictonaryLevel    DictonaryLevel?     @relation(fields: [levelId], references: [id])
+}
+
+model Subcategory {
+  id                    String               @id @default(uuid())
+  categoryId String?
+  title                  String
+  image                 String?
+  vocabluary Words[]
+  CategoriesForDictionaryLevel   CategoriesForDictionaryLevel? @relation(fields: [categoryId], references: [id])
+}
+
+model Words {
+  id                    String               @id @default(uuid())
+  name                  String
+  translation           String
+  audio                 String?
+  image                 String?
+  example1                 String?
+  example2                 String?
+  vocabularyForSubcategoryId String?
+   Subcategory   Subcategory? @relation(fields: [vocabularyForSubcategoryId], references: [id])
+}

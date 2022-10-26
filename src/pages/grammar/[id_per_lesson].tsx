@@ -12,7 +12,7 @@ import { useToast } from '@chakra-ui/react';
 import { AxiosError } from 'axios';
 import ScienceLayout from '../../components/layouts/ScienceLayout';
 import LessonGrammar from '../../components/science/lessons/grammar/LessonGrammar';
-import { HeadLine } from '../../styles/Vocabluary.css';
+import { HeadLine } from '../../components/PageSpecific/Science/Vocabluary.styled';
 import { override } from '../../lib/spinner';
 
 const fetchLesson = (id: string) =>
@@ -25,17 +25,17 @@ const Vocabluary = ({ id }: { id: string }) => {
   const toast = useToast();
 
   const { data: grammar, isLoading } = useQuery(
-    [`id_per_lesson-${id}-grammar`],
+    [`id_per_lesson-grammar`,id],
     () => fetchLesson(id),
     {
       onSuccess: (data) => {
         if (!data) return [];
-        if (!queryClient.getQueryData([`id_per_lesson-${id}-grammar`])) {
-          queryClient.setQueryData([`id_per_lesson-${id}-grammar`], data);
+        if (!queryClient.getQueryData([`id_per_lesson-grammar`,id])) {
+          queryClient.setQueryData([`id_per_lesson-grammar`,id], data);
         }
         data.forEach((el: any) => {
-          if (!queryClient.getQueryData([`id_per_lesson-${id}-grammar`])) {
-            queryClient.setQueryData([`id_per_lesson-${id}-grammar`], el);
+          if (!queryClient.getQueryData([`id_per_lesson-grammar`,id])) {
+            queryClient.setQueryData([`id_per_lesson-grammar`,id], el);
           }
         });
       },
@@ -65,11 +65,11 @@ const Vocabluary = ({ id }: { id: string }) => {
       },
       initialData: () => {
         const cachedData = queryClient.getQueryData([
-          `id_per_lesson-${id}-grammar`,
+          `id_per_lesson-grammar`,id,
         ]);
         if (!cachedData) return;
 
-        queryClient.cancelQueries([`id_per_lesson-${id}-grammar`]);
+        queryClient.cancelQueries([`id_per_lesson-grammar`,id]);
 
         return cachedData;
       },
@@ -104,9 +104,9 @@ export const getServerSideProps = async (context: {
 }) => {
   const id = context.params?.id_per_lesson as string;
   const queryClient = new QueryClient();
-  queryClient.cancelQueries([`id_per_lesson-${id}-grammar`]);
+  queryClient.cancelQueries([`id_per_lesson-grammar`,id]);
 
-  await queryClient.prefetchQuery([`id_per_lesson-${id}-grammar`, id], () =>
+  await queryClient.prefetchQuery([`id_per_lesson-grammar`,id], () =>
     fetchLesson(id)
   );
 

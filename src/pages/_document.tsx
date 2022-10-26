@@ -1,6 +1,5 @@
 import { Html, Head, Main, NextScript } from 'next/document';
-// import NextHead from 'next/head';
-//nextjs.org/docs/api-reference/next/head
+
  export default function Document() {
   return (
     <Html>

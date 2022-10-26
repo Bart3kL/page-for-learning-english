@@ -13,13 +13,14 @@ export const Exercise = styled.div`
   align-items: center;
   flex-direction: column;
   border: 1px solid black;
-  width: 50%;
+  width: 80%;
   height: 400px;
 `;
 export const OptionWrapper = styled.div`
   display: flex;
   align-items: center;
-  width: 100px;
+  justify-content: center;
+  width: 200px;
   height: 50px;
   font-size: 1.3rem;
   input {

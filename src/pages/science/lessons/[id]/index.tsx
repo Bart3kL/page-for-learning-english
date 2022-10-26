@@ -14,15 +14,15 @@ import { AxiosError } from 'axios';
 import BarLoader from 'react-spinners/BarLoader';
 import { getCsrfToken } from 'next-auth/react';
 
-import { HeadLine } from '../../../../styles/LessonPage.css';
+import { HeadLine } from '../../../../components/PageSpecific/Science/LessonPage.styled';
 import ScienceLayout from '../../../../components/layouts/ScienceLayout';
 import {
   LessonCategory,
   LessonsWrapper,
   CategoriesWrapper,
   ImageWrapper,
-  LessonCategoryDisabled
-} from '../../../../styles/Lesson.css';
+  LessonCategoryDisabled,
+} from '../../../../components/PageSpecific/Science/Lesson.styled';
 import { override } from '../../../../lib/spinner';
 
 async function getToken() {
@@ -47,15 +47,18 @@ const Lesson = ({ id }: { id: string }) => {
   const queryClient = useQueryClient();
   const toast = useToast();
 
-  const { data: userProgress,isLoading:loading } = useQuery(['userProgress'], fetchUserProgress);
+  const { data: userProgress, isLoading: loading } = useQuery(
+    ['userProgress'],
+    fetchUserProgress
+  );
   const { data: lesson, isLoading } = useQuery(
-    [`lesson-${id}`],
+    [`lesson`,id],
     () => fetchLesson(id),
     {
       onSuccess: (data) => {
         if (!data) return [];
-        if (!queryClient.getQueryData([`lesson-${id}`])) {
-          queryClient.setQueryData([`lesson-${id}`], data);
+        if (!queryClient.getQueryData([`lesson`,id])) {
+          queryClient.setQueryData([`lesson`,id], data);
         }
       },
       onError: (err: AxiosError) => {
@@ -83,22 +86,22 @@ const Lesson = ({ id }: { id: string }) => {
         });
       },
       initialData: () => {
-        const cachedData = queryClient.getQueryData([`lesson-${id}`]);
+        const cachedData = queryClient.getQueryData([`lesson`,id]);
         if (!cachedData) return;
 
-        queryClient.cancelQueries([`lesson-${id}`]);
+        queryClient.cancelQueries([`lesson`,id]);
 
         return cachedData;
       },
     }
   );
 
-if(loading){
-return <p>Loading</p>
-}
+  if (loading) {
+    return <p>Loading</p>;
+  }
   return (
     <ScienceLayout>
-      {isLoading? (
+      {isLoading ? (
         <BarLoader
           color={'#1f2233'}
           loading={isLoading}
@@ -111,14 +114,24 @@ return <p>Loading</p>
           <HeadLine>{lesson.title}</HeadLine>
           <LessonsWrapper>
             <CategoriesWrapper>
-              <Link href={`/vocabluary/${id}`}>
-                <LessonCategory>
-                  <p>Lekcja 1</p>
-                  <p>Słownictwo</p>
-                  <IoIosArrowDown />
-                </LessonCategory>
-              </Link>
-              {userProgress.lessonStep >= '2' && userProgress.lesson === id ? (
+              {userProgress.lessonStep >= '1' && userProgress.lesson >= id ? (
+                <Link href={`/vocabluary/${id}`}>
+                  <LessonCategory>
+                    <p>Lekcja 1</p>
+                    <p>Słownictwo</p>
+                    <IoIosArrowDown />
+                  </LessonCategory>
+                </Link>
+              ) : (
+                <Link href={`/vocabluary/${id}`}>
+                  <LessonCategoryDisabled>
+                    <p>Lekcja 1</p>
+                    <p>Słownictwo</p>
+                    <IoIosArrowDown />
+                  </LessonCategoryDisabled>
+                </Link>
+              )}
+              {userProgress.lessonStep >= '2' || userProgress.lesson > id ? (
                 <Link href={`/grammar/${id}`}>
                   <LessonCategory>
                     <p>Lekcja 2</p>
@@ -133,7 +146,7 @@ return <p>Loading</p>
                   <IoIosArrowDown />
                 </LessonCategoryDisabled>
               )}
-              {userProgress.lessonStep === '3' && userProgress.lesson === id? ( //zle tutaj jest
+              {userProgress.lessonStep === '3' || userProgress.lesson > id ? ( //zle tutaj jest
                 <Link href={`/exercises/${id}`}>
                   <LessonCategory>
                     <p>Lekcja 3</p>
@@ -172,9 +185,13 @@ export const getServerSideProps = async (context: {
   const id = context.params?.id as string;
   const queryClient = new QueryClient();
 
-  queryClient.cancelQueries([`lesson-${id}`]);
+  queryClient.cancelQueries([`lesson`,id]);
 
-  await queryClient.prefetchQuery([`lesson-${id}`, id], () => fetchLesson(id));
+  await queryClient.prefetchQuery([`lesson`,id], () => fetchLesson(id));
+
+  // jeśli ktoś wszedł na lekcje do której nie ma dostępu (nie odblokował jeszcze)
+  // redirect + ?notAuthorized=true
+  // toast
 
   return {
     props: {

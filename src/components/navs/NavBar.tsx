@@ -12,7 +12,7 @@ import {
   ImageWrapper,
   ProfileName,
   LogoutWrapper,
-} from './NavBar.css';
+} from './NavBar.styled';
 import { icons } from '../../lib/Icons';
 
 export default function Navbar() {

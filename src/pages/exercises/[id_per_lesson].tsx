@@ -12,7 +12,7 @@ import { useToast } from '@chakra-ui/react';
 import { AxiosError } from 'axios';
 import ScienceLayout from '../../components/layouts/ScienceLayout';
 import LessonExercises from '../../components/science/lessons/exercises/LessonExercises';
-import { HeadLine } from '../../styles/Vocabluary.css';
+import { HeadLine } from '../../components/PageSpecific/Science/Vocabluary.styled';
 import { override } from '../../lib/spinner';
 
 const fetchLesson = (id: string) =>
@@ -25,17 +25,17 @@ const Exercises = ({ id }: { id: string }) => {
   const toast = useToast();
 
   const { data: exercises, isLoading } = useQuery(
-    [`id_per_lesson-${id}-exercises`],
+    [`id_per_lesson-exercises`,id],
     () => fetchLesson(id),
     {
       onSuccess: (data) => {
         if (!data) return [];
-        if (!queryClient.getQueryData([`id_per_lesson-${id}-exercises`])) {
-          queryClient.setQueryData([`id_per_lesson-${id}-exercises`], data);
+        if (!queryClient.getQueryData([`id_per_lesson-exercises`,id])) {
+          queryClient.setQueryData([`id_per_lesson-exercises`,id], data);
         }
         data.forEach((el: any) => {
-          if (!queryClient.getQueryData([`id_per_lesson-${id}-exercises`])) {
-            queryClient.setQueryData([`id_per_lesson-${id}-exercises`], el);
+          if (!queryClient.getQueryData([`id_per_lesson-exercises`,id])) {
+            queryClient.setQueryData([`id_per_lesson-exercises`,id], el);
           }
         });
       },
@@ -65,11 +65,11 @@ const Exercises = ({ id }: { id: string }) => {
       },
       initialData: () => {
         const cachedData = queryClient.getQueryData([
-          `id_per_lesson-${id}-exercises`,
+          `id_per_lesson-exercises`,id,
         ]);
         if (!cachedData) return;
 
-        queryClient.cancelQueries([`id_per_lesson-${id}-exercises`]);
+        queryClient.cancelQueries([`id_per_lesson-exercises`,id]);
 
         return cachedData;
       },
@@ -105,9 +105,9 @@ export const getServerSideProps = async (context: {
 }) => {
   const id = context.params?.id_per_lesson as string;
   const queryClient = new QueryClient();
-  queryClient.cancelQueries([`id_per_lesson-${id}-exercises`]);
+  queryClient.cancelQueries([`id_per_lesson-exercises`,id]);
 
-  await queryClient.prefetchQuery([`id_per_lesson-${id}-exercises`, id], () =>
+  await queryClient.prefetchQuery([`id_per_lesson-exercises`,id], () =>
     fetchLesson(id)
   );
 

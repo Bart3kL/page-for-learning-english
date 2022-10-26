@@ -8,7 +8,39 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
+// https://stackoverflow.com/questions/70409219/get-user-id-from-session-in-next-auth-client
+
+// callbacks: {
+//   session: async ({ session, token }) => {
+//     if (session?.user) {
+//       session.user.id = token.uid;
+//     }
+//     return session;
+//   },
+//   jwt: async ({ user, token }) => {
+//     if (user) {
+//       token.uid = user.id;
+//     }
+//     return token;
+//   },
+// },
+// session: {
+//   strategy: 'jwt',
+// },
+// ...
+// });
+
+// jwt
 export default NextAuth({
+  // callbacks: {
+  //   session: async ({ session, token }) => {
+  //     // console.log("token: ",token)
+  //     if (session?.user) {
+  //       session.user.id = token.uid;
+  //     }
+  //     return session;
+  //   },
+  // },
   adapter: PrismaAdapter(prisma),
   providers: [
     GitHubProvider({

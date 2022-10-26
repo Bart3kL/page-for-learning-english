@@ -1,5 +1,5 @@
 import React from 'react';
-import { NoAccessWrapper, BackDrop } from './NoAccess.css';
+import { NoAccessWrapper, BackDrop } from './NoAccess.styled';
 import ScienceNav from '../navs/ScienceNav';
 
 const NoAccess = () => {

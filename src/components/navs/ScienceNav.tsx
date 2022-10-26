@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { icons } from '../../lib/Icons';
 
-import { ScienceNavWrapper, NavList, ListItemWrapper } from './ScienceNav.css';
+import { ScienceNavWrapper, NavList, ListItemWrapper } from './ScienceNav.styled';
 
 const ScienceNav = () => {
   const {

@@ -1,11 +1,14 @@
 import React from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import {useToast } from '@chakra-ui/react';
+import { useToast } from '@chakra-ui/react';
 import { AxiosError } from 'axios';
 import BarLoader from 'react-spinners/BarLoader';
 
 import ScienceLayout from '../../../components/layouts/ScienceLayout';
-import { HeadLine, LessonsWrapper } from '../../../styles/LessonPage.css';
+import {
+  HeadLine,
+  LessonsWrapper,
+} from '../../../components/PageSpecific/Science/LessonPage.styled';
 import LessonView from '../../../components/science/lessons/LessonView';
 import fetchLessons from '../../../lib/axios/useAxios';
 import { ILesson } from '../../../types';
@@ -53,7 +56,6 @@ const LessonPage = () => {
     },
   });
   const { data, isLoading } = lessons;
-  
 
   return (
     <ScienceLayout>

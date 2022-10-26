@@ -1,5 +1,6 @@
 import React from 'react';
 import { getCsrfToken } from 'next-auth/react';
+
 const useUserProgress = () => {
   async function getToken() {
     const csrfToken = getCsrfToken();

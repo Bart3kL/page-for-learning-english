@@ -1,9 +1,13 @@
 import Image from 'next/image';
 import React from 'react';
 import Link from 'next/link';
-import { GrammarWrapper, HeadTitle, ImageWrapper } from './LessonGrammar.css';
+import {
+  GrammarWrapper,
+  HeadTitle,
+  ImageWrapper,
+} from './LessonGrammar.styled';
 import { IGrammar } from '../../../../types';
-import { ButtonToNextLesson } from '../exercises/LessonExercises.css';
+import { ButtonToNextLesson } from '../exercises/LessonExercises.styled';
 import useUserProgress from '../../../../lib/axios/usePostUserProgress';
 const LessonGrammar = ({ grammar }: { grammar: IGrammar[] }) => {
   const fetchLessonStep = useUserProgress();

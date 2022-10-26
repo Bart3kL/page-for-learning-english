@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useQuery } from '@tanstack/react-query';
+
+import BarLoader from 'react-spinners/BarLoader';
 
 import {
   SingleLessonWrapper,
@@ -10,14 +11,25 @@ import {
   LessonTitle,
   LessonCategories,
   SingleLessonWrapperDisabled,
-} from './LessonView.css';
+} from './LessonView.styled';
 import { ILesson } from '../../../types';
 import useGetUserProgress from '../../../lib/axios/useGetUserProgress';
+import { override } from '../../../lib/spinner';
 
 const SingleLesson = ({ lesson }: { lesson: ILesson }) => {
   const { userProgress, isLoading } = useGetUserProgress();
+  
   if (isLoading) {
-    return <p>Loading..</p>;
+    return (
+      <BarLoader
+        color={'#1f2233'}
+        loading={isLoading}
+        cssOverride={override}
+        size={250}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+      />
+    );
   }
   return (
     <>

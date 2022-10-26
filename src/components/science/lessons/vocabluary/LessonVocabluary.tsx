@@ -8,9 +8,9 @@ import {
   Card,
   ButtonWrapper,
   SoundWrapper,
-} from './LessonVocabluary.css';
+} from './LessonVocabluary.styled';
 import { IVocabluary } from '../../../../types';
-import { ButtonToNextLesson } from '../exercises/LessonExercises.css';
+import { ButtonToNextLesson } from '../exercises/LessonExercises.styled';
 import useUserProgress from '../../../../lib/axios/usePostUserProgress';
 
 const LessonVocabluary = ({ vocabluary }: { vocabluary: IVocabluary[] }) => {
@@ -61,14 +61,3 @@ const LessonVocabluary = ({ vocabluary }: { vocabluary: IVocabluary[] }) => {
 };
 
 export default LessonVocabluary;
-// struktura progresu lesson
-// current step
-
-// step
-//
-
-// list of steps
-
-// lesson
-// list of steps
-// currentStep

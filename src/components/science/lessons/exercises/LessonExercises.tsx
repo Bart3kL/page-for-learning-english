@@ -8,11 +8,12 @@ import {
   ButtonWrapper,
   Message,
   ButtonToNextLesson,
-} from './LessonExercises.css';
+} from './LessonExercises.styled';
 import { IExercise } from '../../../../types';
 import useExercises from '../../../../hooks/useExercises';
-
+import useUserProgress from '../../../../lib/axios/usePostUserProgress';
 const LessonExercises = ({ exercises }: { exercises: IExercise[] }) => {
+  const fetchLessonStep = useUserProgress();
   const {
     manageExercise,
     handleAnswer,
@@ -23,7 +24,14 @@ const LessonExercises = ({ exercises }: { exercises: IExercise[] }) => {
   return (
     <ExercisesWrapper>
       {manageExercise.index === exercises.length ? (
-        <ButtonToNextLesson>
+        <ButtonToNextLesson
+          onClick={() =>
+            fetchLessonStep(
+              `${parseInt(exercises[0].exerciseForLessonId) + 1}`,
+              '1'
+            )
+          }
+        >
           <Link
             href={`/science/lessons/${
               parseInt(exercises[0].exerciseForLessonId) + 1

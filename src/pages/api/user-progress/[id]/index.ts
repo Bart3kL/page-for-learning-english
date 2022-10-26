@@ -13,5 +13,6 @@ export default async function getAllLessons(
     const users = await prisma.users.findUnique({ where: { id } });
     return users ? res.send(users) : res.status(400).end();
   }
-  return;
+
+  return res.status(404).end();
 }

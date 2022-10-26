@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextList, TextItem, TextWrapper } from './AnimatedText.css';
+import { TextList, TextItem, TextWrapper } from './AnimatedText.styled';
 
 const AnimatedText = () => {
   return (

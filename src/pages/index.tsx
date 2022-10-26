@@ -7,7 +7,7 @@ import {
   HomePageWrapper,
   LoginButtonsWrapper,
   LoginBtn,
-} from '../styles/HomePage.css';
+} from '../components/PageSpecific/Home/HomePage.styled';
 import useUserProgress from '../lib/axios/usePostUserProgress';
 
 const Home: NextPage = () => {
