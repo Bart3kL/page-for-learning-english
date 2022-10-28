@@ -6,15 +6,15 @@ import {NextLesson,Lessons} from './NextLessons.styled';
 const NextLessons = ({ data }: any) => {
   const fetchLessonStep = useGetUserProgress();
   const nextLessons = data?.slice(
-    parseInt(fetchLessonStep?.userProgress.lesson, data.length)
+    parseInt(fetchLessonStep?.userProgress?.lesson, data.length)
   );
   return (
     <NextLesson>
       <h2>Następne lekcje</h2>
       <Lessons>
         {nextLessons?.slice(0, 3).map((lesson: ILesson) => (
-          <>
-            <div key={lesson.id}>
+          <div key={lesson.id}>
+            <>
               <p>
                 {lesson.id}) {lesson.title}
               </p>
@@ -26,8 +26,8 @@ const NextLessons = ({ data }: any) => {
                   height={100}
                 />
               </span>
-            </div>
-          </>
+            </>
+          </div>
         ))}
       </Lessons>
     </NextLesson>

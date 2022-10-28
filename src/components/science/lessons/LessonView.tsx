@@ -33,7 +33,7 @@ const SingleLesson = ({ lesson }: { lesson: ILesson }) => {
   }
   return (
     <>
-      {userProgress.lesson >= lesson.id ? (
+      {userProgress?.lesson >= lesson.id ? (
         <Link href={`/science/lessons/${lesson.id}`}>
           <SingleLessonWrapper>
             <ImageWrapper>

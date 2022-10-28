@@ -6,7 +6,6 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import axios from 'axios';
-import Image from 'next/image';
 import { useToast } from '@chakra-ui/react';
 import { AxiosError } from 'axios';
 
@@ -15,27 +14,27 @@ import { override } from '../../../lib/spinner';
 import Header from '../../../components/dictonary/Header';
 import { ContentWrapper } from '../../../components/PageSpecific/Dictionary/DictionaryPage.styled';
 import { List } from '../../../components/dictonary/categories/Categories.styled';
-import Link from 'next/link';
+import Category from '../../../components/dictonary/categories/Category';
 
-async function fetchSubcategory(id: string) {
+async function fetchCategory(id: string) {
   const { data } = await axios.get(
-    `http://localhost:3000/api/dictionary/subcategories/${id}`
+    `http://localhost:3000/api/dictionary/categories/${id}`
   );
   return data;
 }
 
-const Subcategory = ({ id }: { id: string }) => {
+const Categories = ({ id }: { id: string }) => {
   const queryClient = useQueryClient();
   const toast = useToast();
 
-  const { data: subcategories, isLoading } = useQuery(
-    [`subcategory`, id],
-    () => fetchSubcategory(id),
+  const { data: categories, isLoading } = useQuery(
+    [`category`, id],
+    () => fetchCategory(id),
     {
       onSuccess: (data) => {
         if (!data) return [];
-        if (!queryClient.getQueryData([`subcategory`, id])) {
-          queryClient.setQueryData([`subcategory`, id], data);
+        if (!queryClient.getQueryData([`category`, id])) {
+          queryClient.setQueryData([`category`, id], data);
         }
       },
       onError: (err: AxiosError) => {
@@ -61,10 +60,10 @@ const Subcategory = ({ id }: { id: string }) => {
         });
       },
       initialData: () => {
-        const cachedData = queryClient.getQueryData([`subcategory`, id]);
+        const cachedData = queryClient.getQueryData([`category`, id]);
         if (!cachedData) return;
 
-        queryClient.cancelQueries([`subcategory`, id]);
+        queryClient.cancelQueries([`category`, id]);
         return cachedData;
       },
     }
@@ -73,8 +72,8 @@ const Subcategory = ({ id }: { id: string }) => {
   return (
     <div>
       <Header
-        title="Wybierz podkategorię"
-        description="Słownik podzielony jest na podkategorie."
+        title="Wybierz kategorię"
+        description="Słownik podzielony jest na kategorie."
       />
       {isLoading ? (
         <BarLoader
@@ -87,21 +86,8 @@ const Subcategory = ({ id }: { id: string }) => {
       ) : (
         <ContentWrapper>
           <List>
-            {subcategories.map((subcategory) => (
-              <Link
-                href={`/dictionary/words/${subcategory.id}`}
-                key={subcategory.id}
-              >
-                <li key={subcategory.id}>
-                  <h3>{subcategory.title}</h3>
-                  <Image
-                    src="https://i.imgur.com/izOMG6H.png"
-                    alt="Picture of category"
-                    width={100}
-                    height={100}
-                  ></Image>
-                </li>
-              </Link>
+            {categories.map((category) => (
+              <Category category={category} key={category.id} />
             ))}
           </List>
         </ContentWrapper>
@@ -110,7 +96,7 @@ const Subcategory = ({ id }: { id: string }) => {
   );
 };
 
-export default Subcategory;
+export default Categories;
 
 export const getServerSideProps = async (context: {
   params: { id: string };
@@ -118,11 +104,9 @@ export const getServerSideProps = async (context: {
   const id = context.params?.id as string;
   const queryClient = new QueryClient();
 
-  queryClient.cancelQueries([`subcategory`, id]);
+  queryClient.cancelQueries([`category`, id]);
 
-  await queryClient.prefetchQuery([`subcategory`, id], () =>
-    fetchSubcategory(id)
-  );
+  await queryClient.prefetchQuery([`category`, id], () => fetchCategory(id));
   return {
     props: {
       id,

@@ -21,10 +21,16 @@ export const List = styled.ul`
       text-align: center;
       height: 30%;
       font-size: 1.6rem;
+      width: 100%;
+      border: 1px solid black;
       margin: 0;
     }
-    span {
+    div {
+      width: 100%;
       height: 70%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
     }
   }
 `;

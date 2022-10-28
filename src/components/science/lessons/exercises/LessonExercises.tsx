@@ -33,9 +33,7 @@ const LessonExercises = ({ exercises }: { exercises: IExercise[] }) => {
           }
         >
           <Link
-            href={`/science/lessons/${
-              parseInt(exercises[0].exerciseForLessonId) + 1
-            }`}
+            href={`/science/lessons`}
           >
             Przejdz do następnej lekcji
           </Link>

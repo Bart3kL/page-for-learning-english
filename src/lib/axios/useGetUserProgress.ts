@@ -1,30 +1,28 @@
 import React from 'react';
 import axios from 'axios';
-import { getCsrfToken } from 'next-auth/react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useToast } from '@chakra-ui/react';
+import { useSession } from 'next-auth/react';
 
-async function getToken() {
-  const csrfToken = getCsrfToken();
-  return csrfToken;
-}
-
-const fetchUserProgress = async () => {
-  const token = await getToken();
-  const data = await axios
-    .get(`http://localhost:3000/api/user-progress/${token}`)
-    .then(({ data }: any) => data);
-  return data;
+const fetchUserProgress = async (id: string) => {
+  if (id) {
+    const data = await axios
+      .get(`http://localhost:3000/api/user-progress/${id}`)
+      .then(({ data }: any) => data);
+    return data;
+  }
+  return 'e'
 };
 
 const useGetUserProgress = () => {
+  const { data } = useSession();
   const queryClient = useQueryClient();
   const toast = useToast();
-
+  const userId = data?.user.id;
   const { data: userProgress, isLoading } = useQuery(
     ['userProgress'],
-    fetchUserProgress,
+    () => fetchUserProgress(userId),
     {
       refetchInterval: 300,
       onSuccess: (data) => {
@@ -65,9 +63,9 @@ const useGetUserProgress = () => {
       },
     }
   );
-
+  if (userId) {
     return { userProgress, isLoading };
-
+  }
 };
 
 export default useGetUserProgress;

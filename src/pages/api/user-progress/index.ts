@@ -15,6 +15,7 @@ export default async function getAllLessons(
     try {
       const { body: data } = req;
       const id = data.userId;
+      console.log(data);
       const usersProgress = await prisma.users.upsert({
         where: { id: id },
         update: {

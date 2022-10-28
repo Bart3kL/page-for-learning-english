@@ -8,15 +8,13 @@ import {
   LoginButtonsWrapper,
   LoginBtn,
 } from '../components/PageSpecific/Home/HomePage.styled';
-import useUserProgress from '../lib/axios/usePostUserProgress';
 
 const Home: NextPage = () => {
-  const fetchLessonStep = useUserProgress();
+
 
   const { FcGoogle, RiFacebookFill, GoMarkGithub } = icons;
 
   const handleLogin = async () => {
-    fetchLessonStep('1', '1');
     await signIn();
   };
   return (

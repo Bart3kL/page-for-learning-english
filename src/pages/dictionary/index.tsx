@@ -93,7 +93,7 @@ const Dictonary = () => {
         <ContentWrapper>
           <List>
             {levels.map((level) => (
-              <Link href={`/dictionary/categories/${level.id}`} key={level.id}>
+              <Link href={`/dictionary/category/${level.id}`} key={level.id}>
                 <li
                   key={level.id}
                   style={{ backgroundImage: `url(${level.image})` }}

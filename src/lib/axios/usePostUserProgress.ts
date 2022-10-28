@@ -1,11 +1,8 @@
 import React from 'react';
-import { getCsrfToken } from 'next-auth/react';
-
+import { useSession } from 'next-auth/react';
 const useUserProgress = () => {
-  async function getToken() {
-    const csrfToken = getCsrfToken();
-    return csrfToken;
-  }
+  const { data } = useSession();
+
   const fetchWord = (progress: any) => {
     fetch('/api/user-progress', {
       method: 'POST',
@@ -19,9 +16,10 @@ const useUserProgress = () => {
     fetchWord({
       lesson,
       lessonStep,
-      userId: await getToken(),
+      userId: data?.user.id,
     });
   };
+
   return fetchLessonStep;
 };
 

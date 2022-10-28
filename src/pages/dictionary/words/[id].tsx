@@ -6,15 +6,15 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import axios from 'axios';
-import Image from 'next/image';
 import { useToast } from '@chakra-ui/react';
 import { AxiosError } from 'axios';
 
+import Word from '../../../components/dictonary/words/Word';
 import BarLoader from 'react-spinners/BarLoader';
 import { override } from '../../../lib/spinner';
 import Header from '../../../components/dictonary/Header';
-import { ContentWrapper } from '../../../components/PageSpecific/Dictionary/DictionaryPage.styled';
-import { List } from '../../../components/dictonary/categories/Categories.styled';
+import { WordsWrapper,WordList } from '../../../components/dictonary/words/Word.styled';
+
 
 async function fetchWords(id: string) {
   const { data } = await axios.get(
@@ -71,10 +71,7 @@ const Words = ({ id }: { id: string }) => {
 
   return (
     <div>
-      <Header
-        title="Słownik"
-        description="Lista dostępnych słów"
-      />
+      <Header title="Słownik" description="Lista dostępnych słów" />
       {isLoading ? (
         <BarLoader
           color={'#1f2233'}
@@ -84,16 +81,13 @@ const Words = ({ id }: { id: string }) => {
           data-testid="loader"
         />
       ) : (
-        <ContentWrapper>
-          <List>
+        <WordsWrapper>
+          <WordList>
             {words.map((word) => (
-              <li key={word.id}>
-                <h3>{word.name}</h3>
-                <h3>{word.translation}</h3>
-              </li>
+              <Word word={word} key={word.id} />
             ))}
-          </List>
-        </ContentWrapper>
+          </WordList>
+        </WordsWrapper>
       )}
     </div>
   );

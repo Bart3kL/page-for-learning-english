@@ -13,7 +13,7 @@ import { useToast } from '@chakra-ui/react';
 import { AxiosError } from 'axios';
 import BarLoader from 'react-spinners/BarLoader';
 import { getCsrfToken } from 'next-auth/react';
-
+import { useSession } from 'next-auth/react';
 import { HeadLine } from '../../../../components/PageSpecific/Science/LessonPage.styled';
 import ScienceLayout from '../../../../components/layouts/ScienceLayout';
 import {
@@ -30,35 +30,36 @@ async function getToken() {
   return csrfToken;
 }
 
-const fetchUserProgress = async () => {
+const fetchUserProgress = async (id) => {
   const token = await getToken();
   const data = await axios
-    .get(`http://localhost:3000/api/user-progress/${token}`)
-    .then(({ data }: any) => data);
+  .get(`http://localhost:3000/api/user-progress/${id}`)
+  .then(({ data }: any) => data);
   return data;
 };
 
 const fetchLesson = (id: string) =>
-  axios
-    .get(`http://localhost:3000/api/lessons/${id}`)
-    .then(({ data }: any) => data);
+axios
+.get(`http://localhost:3000/api/lessons/${id}`)
+.then(({ data }: any) => data);
 
 const Lesson = ({ id }: { id: string }) => {
+  const { data } = useSession();
   const queryClient = useQueryClient();
   const toast = useToast();
 
   const { data: userProgress, isLoading: loading } = useQuery(
     ['userProgress'],
-    fetchUserProgress
+    ()=>fetchUserProgress(data?.user.id)
   );
   const { data: lesson, isLoading } = useQuery(
-    [`lesson`,id],
+    [`lesson`, id],
     () => fetchLesson(id),
     {
       onSuccess: (data) => {
         if (!data) return [];
-        if (!queryClient.getQueryData([`lesson`,id])) {
-          queryClient.setQueryData([`lesson`,id], data);
+        if (!queryClient.getQueryData([`lesson`, id])) {
+          queryClient.setQueryData([`lesson`, id], data);
         }
       },
       onError: (err: AxiosError) => {
@@ -86,10 +87,10 @@ const Lesson = ({ id }: { id: string }) => {
         });
       },
       initialData: () => {
-        const cachedData = queryClient.getQueryData([`lesson`,id]);
+        const cachedData = queryClient.getQueryData([`lesson`, id]);
         if (!cachedData) return;
 
-        queryClient.cancelQueries([`lesson`,id]);
+        queryClient.cancelQueries([`lesson`, id]);
 
         return cachedData;
       },
@@ -185,9 +186,9 @@ export const getServerSideProps = async (context: {
   const id = context.params?.id as string;
   const queryClient = new QueryClient();
 
-  queryClient.cancelQueries([`lesson`,id]);
+  queryClient.cancelQueries([`lesson`, id]);
 
-  await queryClient.prefetchQuery([`lesson`,id], () => fetchLesson(id));
+  await queryClient.prefetchQuery([`lesson`, id], () => fetchLesson(id));
 
   // jeśli ktoś wszedł na lekcje do której nie ma dostępu (nie odblokował jeszcze)
   // redirect + ?notAuthorized=true

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSession, signOut } from 'next-auth/react';
+import axios from 'axios';
 import { useRouter } from 'next/router';
 import {
   MainPageWrapper,
@@ -13,18 +14,33 @@ import {
   ProfileName,
   LogoutWrapper,
 } from './NavBar.styled';
+
 import { icons } from '../../lib/Icons';
+import useUserProgress from '../../lib/axios/usePostUserProgress';
+async function fetchLessons() {
+  const { data } = await axios.get('http://localhost:3000/api/check-user');
 
+  return data;
+}
 export default function Navbar() {
-
   const [toggle, setToggle] = useState(false);
   const session = useSession();
   const router = useRouter();
-
+  const fetchLessonStep = useUserProgress();
   const { MdOutlineKeyboardArrowDown } = icons;
 
   const handleLogout = async () => {
     await signOut();
+  };
+  const { data } = useSession();
+
+  const handleUserProgress = async () => {
+    const users = await fetchLessons();
+    const foundAccount = users.some((user) => user.id === data?.user.id);
+    console.log(foundAccount);
+    if (!foundAccount) {
+      fetchLessonStep('1', '1');
+    }
   };
   return (
     <>
@@ -34,7 +50,7 @@ export default function Navbar() {
             <Logo>
               <Link href="/">Edudor</Link>
             </Logo>
-            <li>
+            <li onClick={handleUserProgress}>
               <Link href="/science">Nauka</Link>
             </li>
             <li>

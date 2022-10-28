@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useQuery, useQueryClient, useQueries } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 import { useToast } from '@chakra-ui/react';
@@ -91,7 +91,7 @@ const SciencePage = () => {
               <h3>Twój potęp</h3>
               <p>
                 {Math.floor(
-                  (fetchLessonStep?.userProgress.lesson / data.length) * 100
+                  (fetchLessonStep?.userProgress?.lesson / data.length) * 100
                 )}
                 /100%
               </p>
@@ -100,7 +100,7 @@ const SciencePage = () => {
                   <div
                     key={lesson.id}
                     style={
-                      fetchLessonStep?.userProgress.lesson >= lesson.id
+                      fetchLessonStep?.userProgress?.lesson >= lesson.id
                         ? { backgroundColor: 'red' }
                         : { backgroundColor: '#d9d9d9' }
                     }
