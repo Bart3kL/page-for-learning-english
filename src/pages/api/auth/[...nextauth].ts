@@ -9,7 +9,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 export default NextAuth({
   callbacks: {
-    session: async ({ session, token }) => {
+    session: async ({ session, token }:any) => {
       if (session?.user) {
         session.user.id = token.uid;
       }

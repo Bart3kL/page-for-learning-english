@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSession } from 'next-auth/react';
 const useUserProgress = () => {
-  const { data } = useSession();
+  const { data }:any = useSession();
 
   const fetchWord = (progress: any) => {
     fetch('/api/user-progress', {

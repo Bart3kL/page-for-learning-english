@@ -15,6 +15,7 @@ import Header from '../../../components/dictonary/Header';
 import { ContentWrapper } from '../../../components/PageSpecific/Dictionary/DictionaryPage.styled';
 import { List } from '../../../components/dictonary/categories/Categories.styled';
 import Category from '../../../components/dictonary/categories/Category';
+import { ICategory } from '../../../types';
 
 async function fetchCategory(id: string) {
   const { data } = await axios.get(
@@ -68,7 +69,6 @@ const Categories = ({ id }: { id: string }) => {
       },
     }
   );
-
   return (
     <div>
       <Header
@@ -86,7 +86,7 @@ const Categories = ({ id }: { id: string }) => {
       ) : (
         <ContentWrapper>
           <List>
-            {categories.map((category) => (
+            {categories.map((category:ICategory) => (
               <Category category={category} key={category.id} />
             ))}
           </List>

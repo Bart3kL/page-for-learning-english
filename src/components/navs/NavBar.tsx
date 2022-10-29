@@ -32,11 +32,11 @@ export default function Navbar() {
   const handleLogout = async () => {
     await signOut();
   };
-  const { data } = useSession();
+  const { data }:any = useSession();
 
   const handleUserProgress = async () => {
     const users = await fetchLessons();
-    const foundAccount = users.some((user) => user.id === data?.user.id);
+    const foundAccount = users.some((user:any) => user.id === data?.user.id);
     console.log(foundAccount);
     if (!foundAccount) {
       fetchLessonStep('1', '1');

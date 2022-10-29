@@ -14,6 +14,26 @@ export const WordList = styled.ul`
   flex-wrap: wrap;
   width: 100%;
 `;
+export const AddToRepetitions = styled.p`
+  display: flex;
+  margin: 0;
+  /* width: 30%; */
+  div {
+    display: flex;
+    align-items: flex-start;
+    justify-content: right;
+    background-color: #2a336b;
+  }
+  svg {
+    color: white;
+    font-size: 3rem;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  svg:hover {
+    color: #27ae60;
+  }
+`;
 export const Sentences = styled.span`
   display: flex;
   flex-direction: column;
@@ -57,12 +77,18 @@ export const WordItem = styled.li`
   margin: 20px;
   div {
     display: flex;
+    justify-content: right;
+    align-items: flex-start;
     width: 100%;
     height: 70%;
-    flex-direction: column;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+  }
+  div:nth-child(2) {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
     color: #2a336b;
     align-items: center;
     justify-content: center;

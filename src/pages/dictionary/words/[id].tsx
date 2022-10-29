@@ -14,7 +14,7 @@ import BarLoader from 'react-spinners/BarLoader';
 import { override } from '../../../lib/spinner';
 import Header from '../../../components/dictonary/Header';
 import { WordsWrapper,WordList } from '../../../components/dictonary/words/Word.styled';
-
+import { IWord } from '../../../types';
 
 async function fetchWords(id: string) {
   const { data } = await axios.get(
@@ -83,7 +83,7 @@ const Words = ({ id }: { id: string }) => {
       ) : (
         <WordsWrapper>
           <WordList>
-            {words.map((word) => (
+            {words.map((word:IWord) => (
               <Word word={word} key={word.id} />
             ))}
           </WordList>

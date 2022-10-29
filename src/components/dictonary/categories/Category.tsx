@@ -1,8 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-
-const Category = ({ category }) => {
+import { ICategory } from '../../../types';
+const Category = ({ category }:{category:ICategory}) => {
   return (
     <Link href={`/dictionary/subcategory/${category.id}`}>
       <li key={category.id}>

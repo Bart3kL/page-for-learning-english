@@ -16,7 +16,7 @@ const fetchUserProgress = async (id: string) => {
 };
 
 const useGetUserProgress = () => {
-  const { data } = useSession();
+  const { data }:any = useSession();
   const queryClient = useQueryClient();
   const toast = useToast();
   const userId = data?.user.id;

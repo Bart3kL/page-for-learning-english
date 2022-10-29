@@ -12,8 +12,8 @@ import axios from 'axios';
 import { useToast } from '@chakra-ui/react';
 import { AxiosError } from 'axios';
 import BarLoader from 'react-spinners/BarLoader';
-import { getCsrfToken } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
+
 import { HeadLine } from '../../../../components/PageSpecific/Science/LessonPage.styled';
 import ScienceLayout from '../../../../components/layouts/ScienceLayout';
 import {
@@ -25,32 +25,26 @@ import {
 } from '../../../../components/PageSpecific/Science/Lesson.styled';
 import { override } from '../../../../lib/spinner';
 
-async function getToken() {
-  const csrfToken = getCsrfToken();
-  return csrfToken;
-}
-
-const fetchUserProgress = async (id) => {
-  const token = await getToken();
+const fetchUserProgress = async (id: string) => {
   const data = await axios
-  .get(`http://localhost:3000/api/user-progress/${id}`)
-  .then(({ data }: any) => data);
+    .get(`http://localhost:3000/api/user-progress/${id}`)
+    .then(({ data }: any) => data);
   return data;
 };
 
 const fetchLesson = (id: string) =>
-axios
-.get(`http://localhost:3000/api/lessons/${id}`)
-.then(({ data }: any) => data);
+  axios
+    .get(`http://localhost:3000/api/lessons/${id}`)
+    .then(({ data }: any) => data);
 
 const Lesson = ({ id }: { id: string }) => {
-  const { data } = useSession();
+  const { data }: any = useSession();
   const queryClient = useQueryClient();
   const toast = useToast();
 
   const { data: userProgress, isLoading: loading } = useQuery(
     ['userProgress'],
-    ()=>fetchUserProgress(data?.user.id)
+    () => fetchUserProgress(data?.user.id)
   );
   const { data: lesson, isLoading } = useQuery(
     [`lesson`, id],
@@ -97,12 +91,9 @@ const Lesson = ({ id }: { id: string }) => {
     }
   );
 
-  if (loading) {
-    return <p>Loading</p>;
-  }
   return (
     <ScienceLayout>
-      {isLoading ? (
+      {isLoading  || loading? (
         <BarLoader
           color={'#1f2233'}
           loading={isLoading}

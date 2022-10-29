@@ -74,7 +74,7 @@ const SciencePage = () => {
             color={'#1f2233'}
             loading={isLoading}
             cssOverride={override}
-            size={250}
+            // size={250}
             aria-label="Loading Spinner"
             data-testid="loader"
           />

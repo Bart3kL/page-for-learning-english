@@ -17,7 +17,7 @@ import useGetUserProgress from '../../../lib/axios/useGetUserProgress';
 import { override } from '../../../lib/spinner';
 
 const SingleLesson = ({ lesson }: { lesson: ILesson }) => {
-  const { userProgress, isLoading } = useGetUserProgress();
+  const { userProgress, isLoading }:any = useGetUserProgress();
   
   if (isLoading) {
     return (
@@ -25,7 +25,7 @@ const SingleLesson = ({ lesson }: { lesson: ILesson }) => {
         color={'#1f2233'}
         loading={isLoading}
         cssOverride={override}
-        size={250}
+        // size={250}
         aria-label="Loading Spinner"
         data-testid="loader"
       />

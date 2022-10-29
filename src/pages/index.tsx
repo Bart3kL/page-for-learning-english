@@ -10,8 +10,6 @@ import {
 } from '../components/PageSpecific/Home/HomePage.styled';
 
 const Home: NextPage = () => {
-
-
   const { FcGoogle, RiFacebookFill, GoMarkGithub } = icons;
 
   const handleLogin = async () => {

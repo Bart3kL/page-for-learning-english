@@ -14,6 +14,7 @@ import Link from 'next/link';
 import Header from '../../components/dictonary/Header';
 import { ContentWrapper,List } from '../../components/PageSpecific/Dictionary/DictionaryPage.styled';
 import { override } from '../../lib/spinner';
+import { ILevel } from '../../types';
 
 async function fetchDictonaryLevels() {
   const { data } = await axios.get('http://localhost:3000/api/dictionary');
@@ -92,7 +93,7 @@ const Dictonary = () => {
       ) : (
         <ContentWrapper>
           <List>
-            {levels.map((level) => (
+            {levels.map((level:ILevel) => (
               <Link href={`/dictionary/category/${level.id}`} key={level.id}>
                 <li
                   key={level.id}

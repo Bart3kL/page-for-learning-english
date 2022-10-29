@@ -3,7 +3,6 @@ import { ReactNode, FC } from 'react';
 import Navbar from '../navs/NavBar';
 import { GlobalStyles } from '../../styles/GlobalStyles.styled';
 
-// NIE CSS TYLKO .styled
 import { GlobalWrapper } from './Layout.styled';
 
 type Props = { children: ReactNode };

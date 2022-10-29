@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
-import { WordItem, Sentences } from './Word.styled';
+import { WordItem, Sentences, AddToRepetitions } from './Word.styled';
 import { BsFillVolumeUpFill } from 'react-icons/bs';
-const Word = ({ word }) => {
+import { MdAdd } from 'react-icons/md';
+
+import { IWord } from '../../../types';
+
+const Word = ({ word }: { word: IWord }) => {
   const [toggle, setToggle] = useState(false);
   const handleToggleSentences = () => {
     setToggle((prev) => !prev);
@@ -14,7 +18,13 @@ const Word = ({ word }) => {
     <WordItem>
       {!toggle ? (
         <>
-          <div style={{ backgroundImage: `url(${word.image})` }}></div>
+          <div style={{ backgroundImage: `url(${word.image})` }}>
+            <AddToRepetitions>
+              <div>
+                <MdAdd />
+              </div>
+            </AddToRepetitions>
+          </div>
           <div>
             <p>{word.name}</p>
             <p>{word.translation}</p>
