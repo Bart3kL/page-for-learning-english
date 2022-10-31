@@ -19,6 +19,7 @@ const Repetitions = () => {
     [`user-repetitions`],
     () => getRepetitions(data.user.id),
     {
+      refetchOnMount: true,
       onSuccess: (data) => {
         if (!data) return [];
         if (!queryClient.getQueryData([`user-repetitions`])) {
@@ -64,7 +65,6 @@ const Repetitions = () => {
       },
     }
   );
-
   return (
     <ScienceLayout>
       {isLoading ? (

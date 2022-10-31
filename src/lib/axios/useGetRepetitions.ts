@@ -31,6 +31,6 @@ export function postWordToRepetitions(word: any, data: any) {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ ...word, userId: data.user.id }),
+    body: JSON.stringify({ ...word, userId: data.user.id, power: '0' }),
   });
 }

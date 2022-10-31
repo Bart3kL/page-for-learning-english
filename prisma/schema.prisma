@@ -126,6 +126,7 @@ model Repetitions {
   translation           String
   audio                 String?
   image                 String?
+  power String?
   Users    Users?     @relation(fields: [userId], references: [id])
 }
 model DictonaryLevel {

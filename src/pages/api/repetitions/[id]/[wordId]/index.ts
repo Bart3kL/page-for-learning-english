@@ -26,6 +26,24 @@ export default async function getAllLessons(
 
     return repetitions ? res.send(repetitions) : res.status(400).end();
   }
+  if (req.method === 'PATCH') {
+    const { wordId }: any = req.query;
+    const { body: data } = req;
+    const repetitions = await prisma.repetitions.update({
+      where: { id: wordId },
+      data: {
+        id: data.id,
+        userId: data.userId,
+        name: data.name,
+        translation: data.translation,
+        audio: data.audio,
+        image: data.image,
+        power: String(data.power),
+      },
+    });
+
+    return repetitions ? res.send(repetitions) : res.status(400).end();
+  }
 
   return res.status(404).end();
 }

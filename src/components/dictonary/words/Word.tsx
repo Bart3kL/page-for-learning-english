@@ -98,7 +98,6 @@ const Word = ({ word }: { word: IWord }) => {
         ? setExists(true)
         : setExists(false);
     }
-    console.log(words);
   }, [word.id, words]);
 
   return (

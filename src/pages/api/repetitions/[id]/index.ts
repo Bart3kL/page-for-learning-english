@@ -15,7 +15,13 @@ export default async function getAllLessons(
     const repetition = repetitions.filter(
       (repetition) => repetition.userId === id
     );
-    return repetition ? res.send(repetition) : res.status(400).end();
+    const sliced = repetition.slice(0);
+    const sorted = sliced.sort(function (a:any, b:any) {
+      return a.power - b.power;
+    });
+
+    const slicePerCent = sorted.slice(0, Math.ceil((sorted.length * 50) / 100));
+    return slicePerCent ? res.send(slicePerCent) : res.status(400).end();
   }
 
   return res.status(404).end();

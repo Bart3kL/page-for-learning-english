@@ -10,13 +10,14 @@ export default async function getAllLessons(
     try {
       const { body: data } = req;
       const usersProgress = await prisma.repetitions.upsert({
-        where: { id: data.id},
+        where: { id: data.id },
         update: {
           id: data.id,
           userId: data.userId,
           audio: data.audio,
           image: data.image,
           name: data.name,
+          power: data.power,
           translation: data.translation,
         },
         create: {
@@ -25,6 +26,7 @@ export default async function getAllLessons(
           audio: data.audio,
           image: data.image,
           name: data.name,
+          power: data.power,
           translation: data.translation,
         },
       });
