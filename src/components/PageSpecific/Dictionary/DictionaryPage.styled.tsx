@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 export const ContentWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -17,9 +16,13 @@ export const ContentWrapper = styled.div`
     margin: 20px;
     width: 250px;
     height: 250px;
+    position: relative;
     cursor: pointer;
-
+    img {
+      position: relative;
+    }
     button {
+      position: absolute;
       margin: 10px;
       border: 0;
       color: white;

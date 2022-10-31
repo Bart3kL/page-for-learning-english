@@ -6,6 +6,15 @@ export const WordsWrapper = styled.div`
   justify-content: center;
   min-height: 75vh;
 `;
+export const ImageWrapper = styled.div`
+  position: relative;
+  img {
+    position: relative;
+  }
+  p {
+    position: absolute;
+  }
+`;
 
 export const WordList = styled.ul`
   display: flex;
@@ -81,9 +90,6 @@ export const WordItem = styled.li`
     align-items: flex-start;
     width: 100%;
     height: 70%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
   }
   div:nth-child(2) {
     display: flex;

@@ -10,9 +10,12 @@ import { useToast } from '@chakra-ui/react';
 import { AxiosError } from 'axios';
 import BarLoader from 'react-spinners/BarLoader';
 import Link from 'next/link';
-
+import Image from 'next/image';
 import Header from '../../components/dictonary/Header';
-import { ContentWrapper,List } from '../../components/PageSpecific/Dictionary/DictionaryPage.styled';
+import {
+  ContentWrapper,
+  List,
+} from '../../components/PageSpecific/Dictionary/DictionaryPage.styled';
 import { override } from '../../lib/spinner';
 import { ILevel } from '../../types';
 
@@ -93,12 +96,15 @@ const Dictonary = () => {
       ) : (
         <ContentWrapper>
           <List>
-            {levels.map((level:ILevel) => (
+            {levels.map((level: ILevel) => (
               <Link href={`/dictionary/category/${level.id}`} key={level.id}>
-                <li
-                  key={level.id}
-                  style={{ backgroundImage: `url(${level.image})` }}
-                >
+                <li key={level.id}>
+                  <Image
+                    src={level.image}
+                    alt="Picture of the author"
+                    width={500}
+                    height={500}
+                  />
                   <button>{level.level}</button>
                 </li>
               </Link>

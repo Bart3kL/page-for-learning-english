@@ -117,8 +117,17 @@ model Users {
   userId     String
   lesson     String
   lessonStep String
+  repetitions Repetitions[]
 }
-
+model Repetitions {
+  id         String       @id @default(uuid())
+  userId String
+  name                  String
+  translation           String
+  audio                 String?
+  image                 String?
+  Users    Users?     @relation(fields: [userId], references: [id])
+}
 model DictonaryLevel {
   id         String                @id @default(uuid())
   image      String

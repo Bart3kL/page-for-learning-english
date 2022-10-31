@@ -76,17 +76,19 @@ const Categories = ({ id }: { id: string }) => {
         description="Słownik podzielony jest na kategorie."
       />
       {isLoading ? (
-        <BarLoader
-          color={'#1f2233'}
-          loading={isLoading}
-          cssOverride={override}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
+        <ContentWrapper>
+          <BarLoader
+            color={'#1f2233'}
+            loading={isLoading}
+            cssOverride={override}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </ContentWrapper>
       ) : (
         <ContentWrapper>
           <List>
-            {categories.map((category:ICategory) => (
+            {categories.map((category: ICategory) => (
               <Category category={category} key={category.id} />
             ))}
           </List>

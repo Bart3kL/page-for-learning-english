@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery, useQueryClient, useQueries } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 import { useToast } from '@chakra-ui/react';
 import { AxiosError } from 'axios';
@@ -61,15 +61,15 @@ const SciencePage = () => {
     },
   });
   const { data, isLoading } = lessons;
- const fetchLessonStep = useGetUserProgress();
+  const fetchLessonStep = useGetUserProgress();
 
   if (!session) {
     return <NoAccess />;
   }
   return (
     <ScienceLayout>
-      <ContentWrapper>
-        {isLoading ? (
+      {isLoading ? (
+        <ContentWrapper>
           <BarLoader
             color={'#1f2233'}
             loading={isLoading}
@@ -78,41 +78,41 @@ const SciencePage = () => {
             aria-label="Loading Spinner"
             data-testid="loader"
           />
-        ) : (
-          <>
-            <div>
-              <WelcomeMessage>
-                <h2>Witaj ponownie, {session.user?.name}</h2>
-                <p>Wczoraj wykonałeś 42 powtórki.</p>
-              </WelcomeMessage>    
-              <NextLessons data={data}/>
-            </div>
-            <ProgressBarWrapper>
-              <h3>Twój potęp</h3>
-              <p>
-                {Math.floor(
-                  (fetchLessonStep?.userProgress?.lesson / data.length) * 100
-                )}
-                /100%
-              </p>
-              <ProgressBar>
-                {data.map((lesson: ILesson) => (
-                  <div
-                    key={lesson.id}
-                    style={
-                      fetchLessonStep?.userProgress?.lesson >= lesson.id
-                        ? { backgroundColor: 'red' }
-                        : { backgroundColor: '#d9d9d9' }
-                    }
-                  >
-                    Lesson {lesson.id}
-                  </div>
-                ))}
-              </ProgressBar>
-            </ProgressBarWrapper>
-          </>
-        )}
-      </ContentWrapper>
+        </ContentWrapper>
+      ) : (
+        <ContentWrapper>
+          <div>
+            <WelcomeMessage>
+              <h2>Witaj ponownie, {session.user?.name}</h2>
+              <p>Wczoraj wykonałeś 42 powtórki.</p>
+            </WelcomeMessage>
+            <NextLessons data={data} />
+          </div>
+          <ProgressBarWrapper>
+            <h3>Twój potęp</h3>
+            <p>
+              {Math.floor(
+                (fetchLessonStep?.userProgress?.lesson / data.length) * 100
+              )}
+              /100%
+            </p>
+            <ProgressBar>
+              {data.map((lesson: ILesson) => (
+                <div
+                  key={lesson.id}
+                  style={
+                    fetchLessonStep?.userProgress?.lesson >= lesson.id
+                      ? { backgroundColor: 'red' }
+                      : { backgroundColor: '#d9d9d9' }
+                  }
+                >
+                  Lesson {lesson.id}
+                </div>
+              ))}
+            </ProgressBar>
+          </ProgressBarWrapper>
+        </ContentWrapper>
+      )}
     </ScienceLayout>
   );
 };

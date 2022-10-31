@@ -13,7 +13,10 @@ import Word from '../../../components/dictonary/words/Word';
 import BarLoader from 'react-spinners/BarLoader';
 import { override } from '../../../lib/spinner';
 import Header from '../../../components/dictonary/Header';
-import { WordsWrapper,WordList } from '../../../components/dictonary/words/Word.styled';
+import {
+  WordsWrapper,
+  WordList,
+} from '../../../components/dictonary/words/Word.styled';
 import { IWord } from '../../../types';
 
 async function fetchWords(id: string) {
@@ -73,17 +76,19 @@ const Words = ({ id }: { id: string }) => {
     <div>
       <Header title="Słownik" description="Lista dostępnych słów" />
       {isLoading ? (
-        <BarLoader
-          color={'#1f2233'}
-          loading={isLoading}
-          cssOverride={override}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
+        <WordsWrapper>
+          <BarLoader
+            color={'#1f2233'}
+            loading={isLoading}
+            cssOverride={override}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </WordsWrapper>
       ) : (
         <WordsWrapper>
           <WordList>
-            {words.map((word:IWord) => (
+            {words.map((word: IWord) => (
               <Word word={word} key={word.id} />
             ))}
           </WordList>

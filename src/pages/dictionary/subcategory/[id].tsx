@@ -76,13 +76,15 @@ const Subcategories = ({ id }: { id: string }) => {
         description="Słownik podzielony jest na podkategorie."
       />
       {isLoading ? (
-        <BarLoader
-          color={'#1f2233'}
-          loading={isLoading}
-          cssOverride={override}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
+        <ContentWrapper>
+          <BarLoader
+            color={'#1f2233'}
+            loading={isLoading}
+            cssOverride={override}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </ContentWrapper>
       ) : (
         <ContentWrapper>
           <List>

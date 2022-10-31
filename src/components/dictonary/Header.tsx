@@ -14,10 +14,6 @@ const Header = ({
         <h2>{title}</h2>
         <p>{description}</p>
       </Title>
-      <SearchBar>
-        <input type="text" placeholder="Wpisz szukane slowo" />
-        <button>Szukaj</button>
-      </SearchBar>
     </HeaderWrapper>
   );
 };

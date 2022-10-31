@@ -15,6 +15,9 @@ const nextConfig = {
       'www.grammar.cl',
       'photos.google.com',
       'i.imgur.com',
+      'www.ang.pl',
+      'cdn.pixabay.com',
+      'theme-stall.com',
     ],
   },
 };

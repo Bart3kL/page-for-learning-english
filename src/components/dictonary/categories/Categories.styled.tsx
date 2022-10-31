@@ -30,7 +30,7 @@ export const List = styled.ul`
       height: 70%;
       background-position: center;
       background-repeat: no-repeat;
-      background-size: cover;
+      background-size: contain;
     }
   }
 `;
